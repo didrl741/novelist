@@ -3,12 +3,14 @@ server:
   port: 8080
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
+    url: jdbc:h2:tcp://localhost/~/novelist
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
 
   jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#    database: mysql
+#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     generate-ddl: true
     show-sql: true
 

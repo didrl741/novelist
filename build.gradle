@@ -29,14 +29,20 @@ dependencies {
 	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0")
 
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	//  db는 나중에 갈아끼자
+	//	runtimeOnly 'mysql:mysql-connector-java'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
 	// devtools
 	compileOnly("org.springframework.boot:spring-boot-devtools")
+
+	// h2
+	runtimeOnly 'com.h2database:h2'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 }
 
 tasks.named('test') {
