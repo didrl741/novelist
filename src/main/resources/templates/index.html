@@ -15,10 +15,27 @@
     <div th:replace="fragments/mybodyHeader :: bodyHeader" />
     <div class="jumbotron">
 
-        <p>오늘의 단어 : ?? ?? ?? ?? ??</p>
+        <p>오늘의 단어 : 사과 바나나 과자</p>
 
         <a class="btn btn-lg btn-dark" href="/write">글쓰러 가기</a>
 
+    </div>
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>내용</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${postList}">
+
+                <td th:text="${post.content}" ></td>
+
+            </tr>
+            </tbody>
+        </table>
     </div>
 
 </div> <!-- /container -->

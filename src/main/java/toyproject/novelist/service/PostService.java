@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import toyproject.novelist.domain.Post;
 import toyproject.novelist.repository.PostRepository;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -17,5 +19,9 @@ public class PostService {
     public Long join(Post post) {
         postRepository.save(post);
         return post.getId();
+    }
+
+    public List<Post> findByLatest() {
+        return postRepository.findByLatest();
     }
 }
