@@ -1,4 +1,4 @@
-package toyproject.novelist.domain;
+package toyproject.novelist.dto;
 
 import lombok.Getter;
 import lombok.Setter;

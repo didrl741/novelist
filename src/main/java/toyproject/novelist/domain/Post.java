@@ -30,7 +30,7 @@ public class Post {
     private List<Love> loves = new ArrayList<Love>();
 
     //== 연관관계 편의 메서드 ==//
-    public void setUser(Member member) {
+    public void setMember(Member member) {
         this.member = member;
         member.getPosts().add(this);
     }

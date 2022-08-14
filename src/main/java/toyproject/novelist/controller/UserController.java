@@ -7,12 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import toyproject.novelist.domain.MemberForm;
+import toyproject.novelist.dto.MemberForm;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor

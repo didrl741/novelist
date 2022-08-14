@@ -20,6 +20,6 @@ public class Member {
 
     private String password;
 
-    @OneToMany
+    @OneToMany(mappedBy = "member")
     private List<Post> posts = new ArrayList<>();
 }
