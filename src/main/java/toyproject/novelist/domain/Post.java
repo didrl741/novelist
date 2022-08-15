@@ -29,6 +29,9 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Love> loves = new ArrayList<Love>();
 
+    @Embedded
+    private TodayWords todayWords;
+
     //== 연관관계 편의 메서드 ==//
     public void setMember(Member member) {
         this.member = member;
