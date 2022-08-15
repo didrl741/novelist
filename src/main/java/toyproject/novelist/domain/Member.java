@@ -1,6 +1,8 @@
 package toyproject.novelist.domain;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -16,10 +19,30 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String loginId;
+    @Column(nullable = false)
+    private String name;
 
-    private String password;
+    @Column(nullable = false)
+    private String email;
 
-    @OneToMany(mappedBy = "member")
-    private List<Post> posts = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    @Builder
+    public Member(String name, String email, Role role) {
+        this.name = name;
+        this.email = email;
+        this.role = role;
+    }
+
+    public Member update(String name) {
+        this.name = name;
+
+        return this;
+    }
+
+    public String getRoleKey() {
+        return this.role.getKey();
+    }
 }
