@@ -2,7 +2,7 @@ package toyproject.novelist.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import toyproject.novelist.domain.Words;
+import toyproject.novelist.domain.word.Words;
 
 import javax.persistence.EntityManager;
 

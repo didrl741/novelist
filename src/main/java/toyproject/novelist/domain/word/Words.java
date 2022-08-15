@@ -1,4 +1,4 @@
-package toyproject.novelist.domain;
+package toyproject.novelist.domain.word;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +17,7 @@ public class Words {
     private Long id;
 
     @ElementCollection
-    @CollectionTable(name = "word_collection", joinColumns = @JoinColumn(name = "wrods_id"))                                  // member_id를 FK로.
+    @CollectionTable(name = "word_collection", joinColumns = @JoinColumn(name = "wrods_id"))
     @Column(name = "word")
     private Set<String> wordCollection = new HashSet<>();
 }

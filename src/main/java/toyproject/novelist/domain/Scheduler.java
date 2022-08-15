@@ -10,8 +10,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 @EnableScheduling
 public class Scheduler {
 
-    @Scheduled(fixedRate = 3000)
-    public void testMethod() {
-        log.info("3초마다 실행!");
+//    @Scheduled(fixedRate = 3000)
+//    public void testMethod() {
+//        log.info("3초마다 실행!");
+//    }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    public void testMethod2(){
+        log.info("매일 00시 정각");
     }
 }

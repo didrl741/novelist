@@ -3,6 +3,8 @@ package toyproject.novelist.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import toyproject.novelist.domain.word.TodayWords;
+import toyproject.novelist.domain.word.TodayWordsEmbedded;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,7 +32,7 @@ public class Post {
     private List<Love> loves = new ArrayList<Love>();
 
     @Embedded
-    private TodayWords todayWords;
+    private TodayWordsEmbedded todayWordsEmbedded;
 
     //== 연관관계 편의 메서드 ==//
     public void setMember(Member member) {

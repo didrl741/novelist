@@ -3,7 +3,7 @@ package toyproject.novelist.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toyproject.novelist.domain.Words;
+import toyproject.novelist.domain.word.Words;
 import toyproject.novelist.repository.WordsRepository;
 
 @Service
