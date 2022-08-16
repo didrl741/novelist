@@ -18,7 +18,21 @@
 <div class="container">
     <div th:replace="fragments/mybodyHeader :: bodyHeader"/>
 
-    <p>오늘의 단어 : ?? ?? ?? ?? ??</p>
+    <p>오늘의 단어</p>
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+            </thead>
+            <tbody>
+            <tr th:each="word : ${wordFive}">
+
+                <td th:text="${word}" ></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
     <form th:action="@{/write}" th:object="${postForm}" method="post" enctype="multipart/form-data" >
 

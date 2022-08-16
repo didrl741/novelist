@@ -1,10 +1,16 @@
 package toyproject.novelist.annotation;
 
 
+import lombok.RequiredArgsConstructor;
+import toyproject.novelist.service.TodayWordsService;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+@RequiredArgsConstructor
 public class WriteValidator implements ConstraintValidator<WriteLimit, String> {
+
+    private final TodayWordsService todayWordsService;
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
@@ -13,19 +19,15 @@ public class WriteValidator implements ConstraintValidator<WriteLimit, String> {
             return false;
         }
 
-//        value = value.strip();
-//        String[] result = value.split(" ");
-//
-//        if (result.length == 6){
-//            return true;
-//        } else {
-//            return false;
-//        }
+        // 오늘의 단어들이 포함됐는지 확인 (TodayWordsService를 주입받는거보다 더 좋은 방법이 있을 것 같다.)
+        // 예를들면 어노테이션 인자로 배열만 넘긴다던가..
+        String[] wordFive = todayWordsService.findTodayWords().makeArr();
 
-        if ( !value.contains("사과") || !value.contains("바나나") ||!value.contains("과자") ) {
-            return false;
+        for (int i = 0; i < 5; i++) {
+            if (!value.contains(wordFive[i])) {
+                return false;
+            }
         }
         return true;
-
     }
 }

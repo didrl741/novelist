@@ -8,8 +8,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import toyproject.novelist.domain.Post;
+import toyproject.novelist.domain.word.TodayWords;
 import toyproject.novelist.dto.PostForm;
 import toyproject.novelist.service.PostService;
+import toyproject.novelist.service.TodayWordsService;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -21,10 +23,16 @@ import java.time.LocalDateTime;
 public class PostController {
 
     private final PostService postService;
+    private final TodayWordsService todayWordsService;
 
     @GetMapping("/write")
     public String createPostForm(Model model) {
+
+        TodayWords todayWords = todayWordsService.findTodayWords();
+        String[] wordFive = todayWords.makeArr();
+
         model.addAttribute("postForm", new PostForm());
+        model.addAttribute("wordFive", wordFive);
         return "post/createPostForm";
     }
 
