@@ -15,7 +15,21 @@
     <div th:replace="fragments/mybodyHeader :: bodyHeader" />
     <div class="jumbotron">
 
-        <p>오늘의 단어 : 사과 바나나 과자</p>
+        <p>오늘의 단어</p>
+
+        <div>
+            <table class="table table-striped">
+                <thead>
+                </thead>
+                <tbody>
+                <tr th:each="word : ${wordFive}">
+
+                    <td th:text="${word}" ></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
         <a class="btn btn-lg btn-dark" href="/write">글쓰러 가기</a>
 

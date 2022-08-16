@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class TodayWords {
 
     @Id
@@ -34,5 +35,16 @@ public class TodayWords {
         this.word5 = wordArr[4];
 
         this.localDate = localDate;
+    }
+
+    public String[] makeArr() {
+        String[] wordFive = new String[5];
+        wordFive[0] = word1;
+        wordFive[1] = word2;
+        wordFive[2] = word3;
+        wordFive[3] = word4;
+        wordFive[4] = word5;
+
+        return wordFive;
     }
 }
