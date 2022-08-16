@@ -17,4 +17,9 @@ public class WordsService {
         wordsRepository.save(words);
         return words.getId();
     }
+
+    @Transactional
+    public void addWord(String word) {
+        wordsRepository.addWord(word);
+    }
 }

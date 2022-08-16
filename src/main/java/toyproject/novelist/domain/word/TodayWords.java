@@ -26,4 +26,13 @@ public class TodayWords {
 
     private LocalDate localDate;
 
+    public TodayWords(String[] wordArr, LocalDate localDate) {
+        this.word1 = wordArr[0];
+        this.word2 = wordArr[1];
+        this.word3 = wordArr[2];
+        this.word4 = wordArr[3];
+        this.word5 = wordArr[4];
+
+        this.localDate = localDate;
+    }
 }
