@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div class="header" th:fragment="bodyHeader">
   <ul class="nav nav-pills pull-right">
     <li><a href="/">Home</a></li>
   </ul>
   <a href="/"><h3 class="text-muted">초단편 소설가</h3></a>
 
-  <div th:if="${session.loginedUserName==null}"href="users/login">
-    <a href="/login">로그인</a>
+  <div sec:authorize="isAnonymous()">
+    <a href="/oauth2/authorization/google">로그인</a>
     <a href="/join/member">회원가입</a>
+  </div>
+  <div sec:authorize="isAuthenticated()">
+    <div sec:authentication="principal.email"></div>
   </div>
 
   <div th:if="${session.loginedUserName!=null}">

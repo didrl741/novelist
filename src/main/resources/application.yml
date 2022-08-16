@@ -25,6 +25,16 @@ spring:
   profiles:
     include: oauth
 
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+      table-name: SPRING_SESSION
+
+  h2:
+    console:
+      enabled: true
+
 logging:
   level:
     org.hibernate.SQL: debug

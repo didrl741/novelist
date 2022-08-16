@@ -2,6 +2,7 @@ package toyproject.novelist.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import toyproject.novelist.domain.user.Member;
 
 import javax.persistence.*;
 

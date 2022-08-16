@@ -1,7 +1,7 @@
 package toyproject.novelist.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import toyproject.novelist.domain.Member;
+import toyproject.novelist.domain.user.Member;
 
 import java.util.Optional;
 

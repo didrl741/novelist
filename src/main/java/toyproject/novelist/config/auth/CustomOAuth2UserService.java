@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import toyproject.novelist.config.auth.dto.OAuthAttributes;
 import toyproject.novelist.config.auth.dto.SessionUser;
-import toyproject.novelist.domain.Member;
+import toyproject.novelist.domain.user.Member;
 import toyproject.novelist.repository.MemberRepository;
 
 import javax.servlet.http.HttpSession;

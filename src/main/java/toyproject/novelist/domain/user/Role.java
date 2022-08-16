@@ -1,4 +1,4 @@
-package toyproject.novelist.domain;
+package toyproject.novelist.domain.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

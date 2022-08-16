@@ -1,7 +1,7 @@
 package toyproject.novelist.config.auth.dto;
 
 import lombok.Getter;
-import toyproject.novelist.domain.Member;
+import toyproject.novelist.domain.user.Member;
 
 import java.io.Serializable;
 
