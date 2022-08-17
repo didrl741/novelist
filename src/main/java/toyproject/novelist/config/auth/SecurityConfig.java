@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .anyRequest().permitAll()
                 .and()
                 .logout()
+                .logoutSuccessUrl("/")
                 .and()
                 .oauth2Login()
                 .loginPage("/login")
