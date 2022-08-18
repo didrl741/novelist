@@ -30,9 +30,4 @@ public class MemberController {
         return "members/login";
     }
 
-    @PostMapping("/login")
-    public String login(@ModelAttribute Member member) {
-
-        return "redirect:/";
-    }
 }
