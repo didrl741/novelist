@@ -14,8 +14,10 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/**").permitAll();
+
 
         return http.build();
     }

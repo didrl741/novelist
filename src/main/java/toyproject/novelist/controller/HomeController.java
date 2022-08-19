@@ -1,14 +1,26 @@
 package toyproject.novelist.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import toyproject.novelist.auth.PrincipalDetails;
+import toyproject.novelist.domain.Pagination;
 import toyproject.novelist.domain.Post;
+import toyproject.novelist.domain.user.Member;
 import toyproject.novelist.domain.word.TodayWords;
+import toyproject.novelist.dto.MemberForm;
 import toyproject.novelist.service.PostService;
 import toyproject.novelist.service.TodayWordsService;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -19,16 +31,37 @@ public class HomeController {
     private final TodayWordsService todayWordsService;
 
     @GetMapping("/")
-    public String home(Model model) {
+    public String home(Model model, @RequestParam(defaultValue = "1") int page) {
 
+        int totalListCnt = postService.findAllCnt();
+        Pagination pagination = new Pagination(totalListCnt, page);
+
+        int startIdx = pagination.getStartIndex();
+        int pageSize = pagination.getPageSize();
+
+        List<Post> postList = postService.findByLatestDate(startIdx, pageSize);
 
         TodayWords todayWords = todayWordsService.findTodayWords();
         String[] wordFive = todayWords.makeArr();
 
-        List<Post> postList = postService.findByLatest();
 
+        model.addAttribute("pagination", pagination);
         model.addAttribute("postList", postList);
         model.addAttribute("wordFive", wordFive);
+
+        return "index";
+    }
+
+    @GetMapping("/test")
+    public String test() {
+
+
+        for(int i=0; i<30; i++) {
+            Post post = new Post();
+            post.setContent("테스트내용입니다 " + i);
+            post.setPostDate(LocalDateTime.now());
+            postService.join(post);
+        }
 
         return "index";
     }

@@ -21,7 +21,11 @@ public class PostService {
         return post.getId();
     }
 
-    public List<Post> findByLatest() {
-        return postRepository.findByLatest();
+    public int findAllCnt() {
+        return postRepository.findAllCnt();
+    }
+
+    public List<Post> findByLatestDate(int startIdx, int pageSize) {
+        return postRepository.findByLatestDate(startIdx, pageSize);
     }
 }

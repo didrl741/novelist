@@ -16,8 +16,16 @@ public class PostRepository {
         em.persist(post);
     }
 
-    public List<Post> findByLatest(){
+
+    public int findAllCnt() {
+        return ((Number) em.createQuery("select count(p) from Post p")
+                .getSingleResult()).intValue();
+    }
+
+    public List<Post> findByLatestDate(int startIdx, int pageSize) {
         return em.createQuery("select p from Post p order by p.postDate desc", Post.class)
+                .setFirstResult(startIdx)
+                .setMaxResults(pageSize)
                 .getResultList();
     }
 }
