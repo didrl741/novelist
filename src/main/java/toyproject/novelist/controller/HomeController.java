@@ -46,8 +46,6 @@ public class HomeController {
         model.addAttribute("postList", postList);
         model.addAttribute("wordFive", wordFive);
 
-        System.out.println(user.getEmail());
-
         return "index";
     }
 

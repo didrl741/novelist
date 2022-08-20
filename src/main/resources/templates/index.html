@@ -10,15 +10,17 @@
 <head th:replace="fragments/myheader :: header">
     <title>Hello</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
 </head>
 
 <body>
+
 <div class="container">
     <div th:replace="fragments/mybodyHeader :: bodyHeader" />
     <div class="jumbotron">
 
         <p>오늘의 단어</p>
-
         <div>
             <table class="table table-striped">
                 <thead>
@@ -42,13 +44,21 @@
         <table class="table table-striped">
             <thead>
             <tr>
+                <th>작성자</th>
+                <th>이메일</th>
                 <th>내용</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="post : ${postList}">
 
+                <td th:text="${post.user.name}" ></td>
+                <td th:text="${post.user.email}" ></td>
                 <td th:text="${post.content}" ></td>
+                <td>
+                    <i class="fa-solid fa-heart"></i>
+                    <i class="fa-regular fa-heart"></i>
+                </td>
 
             </tr>
             </tbody>

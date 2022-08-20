@@ -56,9 +56,9 @@ public class UserController {
 
         if (user != null) {
             System.out.println("user =====" + user);
+            model.addAttribute("user", user);
         }
 
-        model.addAttribute("user", user);
         return "members/memberInfo";
     }
 

@@ -26,17 +26,19 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User member;
+    private User user;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Love> loves = new ArrayList<Love>();
+
+    private int loveCount = 0;
 
     @Embedded
     private TodayWordsEmbedded todayWordsEmbedded;
 
     //== 연관관계 편의 메서드 ==//
-    public void setMember(User member) {
-        this.member = member;
-//        member.getPosts().add(this);
+    public void setUser(User user) {
+        this.user = user;
+//        user.getPosts().add(this); 필요할 시 추가
     }
 }
