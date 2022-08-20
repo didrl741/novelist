@@ -2,7 +2,7 @@ package toyproject.novelist.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import toyproject.novelist.domain.user.Member;
+import toyproject.novelist.domain.user.User;
 
 import javax.persistence.*;
 
@@ -17,14 +17,14 @@ public class Love {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;
+    private User member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
 
     //== 연관관계 편의 메서드 ==//
-    public void setUser(Member member) {
+    public void setUser(User member) {
         this.member = member;
         // Member에 List<Love> 있는경우 add
     }

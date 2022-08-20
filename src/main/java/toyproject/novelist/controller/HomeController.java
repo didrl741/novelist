@@ -1,25 +1,21 @@
 package toyproject.novelist.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import toyproject.novelist.auth.PrincipalDetails;
+import toyproject.novelist.config.auth.LoginUser;
+import toyproject.novelist.config.auth.dto.SessionUser;
 import toyproject.novelist.domain.Pagination;
 import toyproject.novelist.domain.Post;
-import toyproject.novelist.domain.user.Member;
+import toyproject.novelist.domain.user.User;
 import toyproject.novelist.domain.word.TodayWords;
-import toyproject.novelist.dto.MemberForm;
 import toyproject.novelist.service.PostService;
 import toyproject.novelist.service.TodayWordsService;
 
-import java.security.Principal;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,9 +25,10 @@ public class HomeController {
 
     private final PostService postService;
     private final TodayWordsService todayWordsService;
+    private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String home(Model model, @RequestParam(defaultValue = "1") int page) {
+    public String home(Model model, @RequestParam(defaultValue = "1") int page, @LoginUser SessionUser user) {
 
         int totalListCnt = postService.findAllCnt();
         Pagination pagination = new Pagination(totalListCnt, page);
@@ -48,6 +45,8 @@ public class HomeController {
         model.addAttribute("pagination", pagination);
         model.addAttribute("postList", postList);
         model.addAttribute("wordFive", wordFive);
+
+        System.out.println(user.getEmail());
 
         return "index";
     }

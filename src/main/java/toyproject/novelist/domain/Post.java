@@ -3,7 +3,7 @@ package toyproject.novelist.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import toyproject.novelist.domain.user.Member;
+import toyproject.novelist.domain.user.User;
 import toyproject.novelist.domain.word.TodayWordsEmbedded;
 
 import javax.persistence.*;
@@ -26,7 +26,7 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private Member member;
+    private User member;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Love> loves = new ArrayList<Love>();
@@ -35,7 +35,7 @@ public class Post {
     private TodayWordsEmbedded todayWordsEmbedded;
 
     //== 연관관계 편의 메서드 ==//
-    public void setMember(Member member) {
+    public void setMember(User member) {
         this.member = member;
 //        member.getPosts().add(this);
     }

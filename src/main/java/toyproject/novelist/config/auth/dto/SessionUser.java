@@ -1,7 +1,7 @@
 package toyproject.novelist.config.auth.dto;
 
 import lombok.Getter;
-import toyproject.novelist.domain.user.Member;
+import toyproject.novelist.domain.user.User;
 
 import java.io.Serializable;
 
@@ -11,8 +11,8 @@ public class SessionUser implements Serializable {
     private String name;
     private String email;
 
-    public SessionUser(Member member) {
-        this.name = member.getName();
-        this.email = member.getEmail();
+    public SessionUser(User user) {
+        this.name = user.getName();
+        this.email = user.getEmail();
     }
 }
