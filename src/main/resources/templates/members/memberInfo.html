@@ -1,11 +1,18 @@
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
+<head th:replace="fragments/myheader :: header">
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+
 <body>
-<!--    <p th:text="${principalDetails}"></p><a>님, 반가워요!</a>-->
+<div class="container">
+    <div th:replace="fragments/mybodyHeader :: bodyHeader" />
+    <div class="jumbotron">
+
+        <p th:text="|email: ${user.email}|"></p>
+        <p th:text="|${user.name} 님, 반가워요|"></p>
+
 </body>
 </html>

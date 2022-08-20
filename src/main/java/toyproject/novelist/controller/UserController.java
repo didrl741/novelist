@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import toyproject.novelist.config.auth.LoginUser;
+import toyproject.novelist.config.auth.dto.SessionUser;
 import toyproject.novelist.dto.UserForm;
 import toyproject.novelist.repository.UserRepository;
 
@@ -46,6 +48,18 @@ public class UserController {
         // 회원가입 로직 추가해야됨
 
         return "redirect:/";
+    }
+
+    // 회원정보 페이지로 이동
+    @GetMapping("/userInfo")
+    public String userInfo(Model model, @LoginUser SessionUser user) {
+
+        if (user != null) {
+            System.out.println("user =====" + user);
+        }
+
+        model.addAttribute("user", user);
+        return "members/memberInfo";
     }
 
 }
