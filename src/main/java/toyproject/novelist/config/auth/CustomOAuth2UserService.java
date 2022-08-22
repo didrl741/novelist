@@ -1,6 +1,7 @@
 package toyproject.novelist.config.auth;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -11,11 +12,14 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import toyproject.novelist.config.auth.dto.OAuthAttributes;
 import toyproject.novelist.config.auth.dto.SessionUser;
+import toyproject.novelist.domain.user.Role;
 import toyproject.novelist.domain.user.User;
 import toyproject.novelist.repository.UserRepository;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -35,7 +39,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
         User user = saveOrUpdate(attributes);
-        httpSession.setAttribute("user", new SessionUser(user));
+        List<GrantedAuthority> auth = new ArrayList<>();
+        auth.add(new SimpleGrantedAuthority(Role.USER.getKey()));
+        httpSession.setAttribute("user", new SessionUser(user.getName(), user.getEmail(), user.getPassword(), auth));
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),

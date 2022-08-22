@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import toyproject.novelist.BaseTimeEntity;
 
 import javax.persistence.*;
@@ -42,7 +43,7 @@ public class User extends BaseTimeEntity {
         this.name = name;
         this.email = email;
         this.role = role;
-        this.password = password;
+        this.password = enCodePW(password);
     }
 
     public User update(String name) {
@@ -53,5 +54,12 @@ public class User extends BaseTimeEntity {
 
     public String getRoleKey() {
         return this.role.getKey();
+    }
+
+    public String enCodePW(String password) {
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        return passwordEncoder.encode(password);
     }
 }

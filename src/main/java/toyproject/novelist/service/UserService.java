@@ -18,4 +18,19 @@ public class UserService {
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    public User duplicateName(String name) {
+
+        return userRepository.findByName(name).orElse(null);
+    }
+
+    public User duplicateEmail(String email) {
+
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
+    public void join(User user) {
+
+        userRepository.save(user);
+    }
 }
