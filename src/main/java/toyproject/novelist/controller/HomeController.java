@@ -10,6 +10,7 @@ import toyproject.novelist.config.auth.LoginUser;
 import toyproject.novelist.config.auth.dto.SessionUser;
 import toyproject.novelist.domain.Pagination;
 import toyproject.novelist.domain.Post;
+import toyproject.novelist.domain.user.Role;
 import toyproject.novelist.domain.user.User;
 import toyproject.novelist.domain.word.TodayWords;
 import toyproject.novelist.service.PostService;
@@ -28,7 +29,7 @@ public class HomeController {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String home(Model model, @RequestParam(defaultValue = "1") int page, @LoginUser SessionUser user) {
+    public String home(Model model, @RequestParam(defaultValue = "1") int page, @AuthenticationPrincipal SessionUser user) {
 
         int totalListCnt = postService.findAllCnt();
         Pagination pagination = new Pagination(totalListCnt, page);
@@ -55,6 +56,8 @@ public class HomeController {
 
         for(int i=0; i<30; i++) {
             Post post = new Post();
+            User user = new User("testMan", "test@naver.com", Role.USER);
+            post.setUser(user);
             post.setContent("테스트내용입니다 " + i);
             post.setPostDate(LocalDateTime.now());
             postService.join(post);

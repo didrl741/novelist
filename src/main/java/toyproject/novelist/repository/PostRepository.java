@@ -17,6 +17,10 @@ public class PostRepository {
     }
 
 
+    public Post findOne(Long postId) {
+        return em.find(Post.class, postId);
+    }
+
     public int findAllCnt() {
         return ((Number) em.createQuery("select count(p) from Post p")
                 .getSingleResult()).intValue();

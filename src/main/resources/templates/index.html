@@ -56,8 +56,12 @@
                 <td th:text="${post.user.email}" ></td>
                 <td th:text="${post.content}" ></td>
                 <td>
-                    <i class="fa-solid fa-heart"></i>
-                    <i class="fa-regular fa-heart"></i>
+                    <i class="fa-solid fa-heart"
+                       th:id="likeImg"
+                       th:postId="${post.id}"
+                       onclick="determineLike(this.getAttribute('postId'))"></i>
+<!--                    <i class="fa-regular fa-heart"></i>-->
+                    <span id="likeCount" th:text="${post.loveCount}"></span>
                 </td>
 
             </tr>
@@ -92,4 +96,51 @@
 </nav>
 
 </body>
+
+<script type="text/javascript">
+
+    var httpRequest;
+
+    function determineLike(id) {
+
+        /* 데이터를 가져옴 */
+        var input = document.getElementById("likeCount").value;
+        /* 입력된 데이터 Json 형식으로 변경 */
+        var reqJson = new Object();
+        reqJson.name = input;
+        /* 통신에 사용 될 XMLHttpRequest 객체 정의 */
+        httpRequest = new XMLHttpRequest();
+        /* httpRequest의 readyState가 변화했을때 함수 실행 */
+        httpRequest.onreadystatechange = () => {
+            /* readyState가 Done이고 응답 값이 200일 때 받아온 response로 화면 재구성 */
+            if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                if (httpRequest.status === 200) {
+                    var result = httpRequest.response;
+
+                    if (result.check === "loved") {
+                        document.getElementById("likeImg").className = "fa-solid fa-heart";
+                    }
+                    else {
+                        document.getElementById("likeImg").className = "fa-regular fa-heart";
+                    }
+
+                    document.getElementById("likeCount").innerText = result.count;
+                } else {
+                    alert('request에 뭔가 문제가 있어요.');
+                }
+            }
+        };
+        /* Post 방식으로 요청 */
+        httpRequest.open('POST', "/" + id + "/likeAndHateByAjax", true);
+        /* Response Type을 Json으로 사전 정의 */
+        httpRequest.responseType = "json";
+        /* 요청 Header에 컨텐츠 타입은 Json으로 사전 정의 */
+        httpRequest.setRequestHeader('Content-Type', 'application/json');
+        /* 정의된 서버에 Json 형식의 요청 Data를 포함하여 요청을 전송 */
+        httpRequest.send(JSON.stringify(reqJson));
+
+    }
+
+</script>
+
 </html>
