@@ -13,8 +13,10 @@ import toyproject.novelist.domain.Post;
 import toyproject.novelist.domain.user.Role;
 import toyproject.novelist.domain.user.User;
 import toyproject.novelist.domain.word.TodayWords;
+import toyproject.novelist.service.LoveService;
 import toyproject.novelist.service.PostService;
 import toyproject.novelist.service.TodayWordsService;
+import toyproject.novelist.service.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -26,7 +28,8 @@ public class HomeController {
 
     private final PostService postService;
     private final TodayWordsService todayWordsService;
-    private final HttpSession httpSession;
+    private final LoveService loveService;
+    private final UserService userService;
 
     @GetMapping("/")
     public String home(Model model, @RequestParam(defaultValue = "1") int page, @AuthenticationPrincipal SessionUser user) {
@@ -38,6 +41,17 @@ public class HomeController {
         int pageSize = pagination.getPageSize();
 
         List<Post> postList = postService.findByLatestDate(startIdx, pageSize);
+
+        if (user != null) {
+            System.out.println("userEmail ====" + user.getEmail());
+            User logInedUser = userService.findByEmail(user.getEmail()).get();
+            Long logInedUserId = logInedUser.getId();
+            for (Post post : postList) {
+                if (loveService.findByUserAndPost(logInedUserId, post.getId()) != null) {
+                    post.setLovedByLogInedUser(true);
+                }
+            }
+        }
 
         TodayWords todayWords = todayWordsService.findTodayWords();
         String[] wordFive = todayWords.makeArr();

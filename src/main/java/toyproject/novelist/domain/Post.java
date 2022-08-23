@@ -37,6 +37,9 @@ public class Post {
 
     private int loveCount;
 
+    @Transient
+    private boolean isLovedByLogInedUser;
+
     @Embedded
     private TodayWordsEmbedded todayWordsEmbedded;
 

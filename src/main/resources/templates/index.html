@@ -56,13 +56,20 @@
                 <td th:text="${post.user.email}" ></td>
                 <td th:text="${post.content}" ></td>
                 <td>
-                    <i class="fa-solid fa-heart"
+                    <i th:if="${post.isLovedByLogInedUser == true }"
+                       class="fa-solid fa-heart"
                        th:id="|loveImg${post.id}|"
                        th:postId="${post.id}"
                        onclick="determineLike(this.getAttribute('postId'))"></i>
+
+                    <i th:if="${post.isLovedByLogInedUser != true }"
+                       class="fa-regular fa-heart"
+                       th:id="|loveImg${post.id}|"
+                       th:postId="${post.id}"
+                       onclick="determineLike(this.getAttribute('postId'))"></i>
+
                     <span th:id="|loveCount${post.id}|" th:text="${post.loveCount}"></span>
                 </td>
-
             </tr>
             </tbody>
         </table>
@@ -116,7 +123,6 @@
                 if (httpRequest.status === 200) {
                     var result = httpRequest.response;
 
-
                     if (result.check === "loved") {
                         document.getElementById("loveImg" + id).className = "fa-solid fa-heart";
                     }
@@ -127,7 +133,7 @@
                     document.getElementById("loveCount" + id).innerText = result.count;
 
                 } else {
-                    alert('request에 뭔가 문제가 있어요.');
+                    alert('request에 문제가 있어요.');
                 }
             }
         };

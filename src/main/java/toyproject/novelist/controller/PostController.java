@@ -77,6 +77,8 @@ public class PostController {
     @PostMapping("/{postId}/likeAndHateByAjax")
     public Map<String, Object> loveByAjax(@PathVariable("postId") Long postId, @AuthenticationPrincipal SessionUser user) {
 
+        Map<String, Object> returnMap = new HashMap<>();
+        System.out.println("check=====" + user);
 
         String logInedUserEmail = user.getEmail();
         User logInedUser = userService.findByEmail(logInedUserEmail).get();
@@ -86,7 +88,7 @@ public class PostController {
 
         Love findLove = loveService.findByUserAndPost(userId, postId);
 
-        Map<String, Object> returnMap = new HashMap<>();
+
 
         if (findLove == null) {
             Love love = new Love(logInedUser, findPost);
