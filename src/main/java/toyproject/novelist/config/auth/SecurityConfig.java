@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/join", "/css/**", "/js/**", "/img/**").permitAll()
+                .antMatchers("/", "/login", "/join", "/find/password", "/css/**", "/js/**", "/img/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()

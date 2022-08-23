@@ -16,4 +16,6 @@ public class UserForm {
 
     @NotEmpty(message = "비밀번호 필수입니다.")
     private String password;
+
+    private String auth_email;
 }

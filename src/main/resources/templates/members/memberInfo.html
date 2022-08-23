@@ -8,11 +8,11 @@
 
 <body>
 <div class="container">
-    <div th:replace="fragments/mybodyHeader :: bodyHeader" />
+    <div th:replace="fragments/mybodyheader :: bodyHeader" />
     <div class="jumbotron">
 
-        <p th:text="|email: ${user.email}|"></p>
-        <p th:text="|${user.name} 님, 반가워요|"></p>
+        <p th:text="|email &#58; ${user.email}|"></p>
+        <p th:text="|${user.username} 님, 반가워요|"></p>
 
 </body>
 </html>

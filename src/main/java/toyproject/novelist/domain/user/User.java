@@ -28,6 +28,8 @@ public class User extends BaseTimeEntity {
 
     private String password;
 
+    private String auth_email;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -39,11 +41,12 @@ public class User extends BaseTimeEntity {
     }
 
     @Builder
-    public User(String name, String email, Role role, String password) {
+    public User(String name, String email, Role role, String password, String auth_email) {
         this.name = name;
         this.email = email;
         this.role = role;
         this.password = enCodePW(password);
+        this.auth_email = auth_email;
     }
 
     public User update(String name) {
@@ -61,5 +64,10 @@ public class User extends BaseTimeEntity {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         return passwordEncoder.encode(password);
+    }
+
+    public void changePW(String password) {
+
+        this.password = enCodePW(password);
     }
 }

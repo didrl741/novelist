@@ -2,6 +2,8 @@ package toyproject.novelist.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -21,13 +23,15 @@ import toyproject.novelist.domain.user.User;
 import toyproject.novelist.dto.UserForm;
 import toyproject.novelist.service.UserService;
 
+import javax.servlet.http.HttpSession;
+import java.util.Random;
+
 @Controller
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
 public class UserController {
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
 
     // 로그인
@@ -95,7 +99,7 @@ public class UserController {
             return "members/createMemberForm";
         }
 
-        User user = new User(userForm.getName(), userForm.getEmail(), Role.USER, userForm.getPassword());
+        User user = new User(userForm.getName(), userForm.getEmail(), Role.USER, userForm.getPassword(), userForm.getAuth_email());
         userService.join(user);
 
 
@@ -104,14 +108,46 @@ public class UserController {
 
     // 회원정보 페이지로 이동
     @GetMapping("/userInfo")
-    public String userInfo(Model model, @LoginUser SessionUser user) {
+    public String userInfo(Model model, @AuthenticationPrincipal SessionUser user) {
 
-        if (user != null) {
-            System.out.println("user =====" + user);
-            model.addAttribute("user", user);
-        }
+        System.out.println("user =====" + user);
+        model.addAttribute("user", user);
 
         return "members/memberInfo";
     }
 
+    // 비밀번호 찾기 페이지로 이동
+    @GetMapping("/find/password")
+    public String findPWForm(Model model) {
+
+        model.addAttribute("userForm", new UserForm());
+        return "members/findPW";
+    }
+
+    // 비밀번호 찾기
+    @PostMapping("/find/password")
+    public String findPW(@Validated @ModelAttribute("userForm") UserForm userForm, BindingResult result) {
+
+        System.out.println("========= findPW Logic START !!! ================");
+
+        User user = userService.findByEmail(userForm.getEmail()).orElse(null);
+
+        System.out.println("======= FIND USER !! =====");
+        System.out.println(user);
+
+        /*
+        if (user == null) {
+            System.out.println("====== USER is NULL !!! =======");
+            result.reject("wrong", null, null);
+        }
+
+        if (result.hasErrors()) {
+            return "members/findPW";
+        }*/
+
+        System.out.println("======== USER is PRESENT !!! =====");
+        System.out.println(user.getEmail());
+
+        return "redirect:/";
+    }
 }

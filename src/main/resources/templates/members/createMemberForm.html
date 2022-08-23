@@ -9,6 +9,8 @@
 <body>
 <div class="container">
 
+  <div th:replace="fragments/mybodyheader :: bodyHeader"/>
+
   <form role="form" th:action th:object="${userForm}" method="post">
 
     <div class="form-group">
@@ -21,25 +23,29 @@
 
     <div class="form-group">
       <label th:for="email">e-mail</label>
-      <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="이메일을 입력하세요" required th:errorclass="field-error">
+      <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="name@example.com" required th:errorclass="field-error">
       <div class="field-error" th:errors="*{email}">
         이메일 오류
       </div>
     </div>
 
-    <div class="form-control">
+    <div class="form-group">
       <label th:for="password">비밀번호</label>
-      <input type="text" id="password" th:field="*{password}" class="form-control" placeholder="********" required th:errorclass="field-error">
+      <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="********" required th:errorclass="field-error">
       <div class="field-error" th:errors="*{password}">
         비밀번호 오류
       </div>
+    </div>
+
+    <div class="form-group">
+      <label th:for="auth_email">비밀번호 재발급용 이메일</label>
+      <input type="email" id="auth_email" th:field="*{auth_email}" class="form-control" placeholder="name@example.com">
     </div>
 
     <button type="submit" class="btn btn-primary">가입하기</button>
     <a th:href="@{/}" class="btn btn-primary">취소</a>
   </form>
   <br/>
-  <div />
 </div> <!-- /container -->
 </body>
 </html>
