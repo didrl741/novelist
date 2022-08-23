@@ -57,11 +57,10 @@
                 <td th:text="${post.content}" ></td>
                 <td>
                     <i class="fa-solid fa-heart"
-                       th:id="likeImg"
+                       th:id="|loveImg${post.id}|"
                        th:postId="${post.id}"
                        onclick="determineLike(this.getAttribute('postId'))"></i>
-<!--                    <i class="fa-regular fa-heart"></i>-->
-                    <span id="likeCount" th:text="${post.loveCount}"></span>
+                    <span th:id="|loveCount${post.id}|" th:text="${post.loveCount}"></span>
                 </td>
 
             </tr>
@@ -104,7 +103,7 @@
     function determineLike(id) {
 
         /* 데이터를 가져옴 */
-        var input = document.getElementById("likeCount").value;
+        var input = document.getElementById("loveCount" + id).value;
         /* 입력된 데이터 Json 형식으로 변경 */
         var reqJson = new Object();
         reqJson.name = input;
@@ -117,14 +116,16 @@
                 if (httpRequest.status === 200) {
                     var result = httpRequest.response;
 
+
                     if (result.check === "loved") {
-                        document.getElementById("likeImg").className = "fa-solid fa-heart";
+                        document.getElementById("loveImg" + id).className = "fa-solid fa-heart";
                     }
                     else {
-                        document.getElementById("likeImg").className = "fa-regular fa-heart";
+                        document.getElementById("loveImg" + id).className = "fa-regular fa-heart";
                     }
 
-                    document.getElementById("likeCount").innerText = result.count;
+                    document.getElementById("loveCount" + id).innerText = result.count;
+
                 } else {
                     alert('request에 뭔가 문제가 있어요.');
                 }

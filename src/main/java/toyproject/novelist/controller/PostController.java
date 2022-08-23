@@ -111,9 +111,6 @@ public class PostController {
 
         returnMap.put("count", findPost.getLoveCount());
 
-        System.out.println("lovecount===========" + findPost.getLoveCount());
-        System.out.println("loveList===========" + findPost.getLoves());
-
         return returnMap;
     }
 }
