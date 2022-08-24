@@ -23,7 +23,9 @@ import toyproject.novelist.domain.user.User;
 import toyproject.novelist.dto.UserForm;
 import toyproject.novelist.service.UserService;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
 @Controller
@@ -126,7 +128,8 @@ public class UserController {
 
     // 비밀번호 찾기
     @PostMapping("/find/password")
-    public String findPW(@Validated @ModelAttribute("userForm") UserForm userForm, BindingResult result) {
+    public String findPW(@Validated @ModelAttribute("userForm") UserForm userForm, BindingResult result)
+            throws MessagingException, UnsupportedEncodingException {
 
         System.out.println("========= findPW Logic START !!! ================");
 
@@ -135,18 +138,14 @@ public class UserController {
         System.out.println("======= FIND USER !! =====");
         System.out.println(user);
 
-        /*
         if (user == null) {
             System.out.println("====== USER is NULL !!! =======");
             result.reject("wrong", null, null);
+
+            return "members/findPW";
         }
 
-        if (result.hasErrors()) {
-            return "members/findPW";
-        }*/
-
-        System.out.println("======== USER is PRESENT !!! =====");
-        System.out.println(user.getEmail());
+        userService.sendMail(userService.setPWMessage(user));
 
         return "redirect:/";
     }
