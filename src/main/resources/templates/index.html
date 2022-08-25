@@ -56,19 +56,31 @@
                 <td th:text="${post.user.email}" ></td>
                 <td th:text="${post.content}" ></td>
                 <td>
-                    <i th:if="${post.isLovedByLogInedUser == true }"
+                    <i sec:authorize="isAuthenticated()"
+                       th:if="${post.isLovedByLogInedUser == true }"
                        class="fa-solid fa-heart"
                        th:id="|loveImg${post.id}|"
                        th:postId="${post.id}"
                        onclick="determineLike(this.getAttribute('postId'))"></i>
 
-                    <i th:if="${post.isLovedByLogInedUser != true }"
+                    <i sec:authorize="isAuthenticated()"
+                       th:if="${post.isLovedByLogInedUser != true}"
                        class="fa-regular fa-heart"
                        th:id="|loveImg${post.id}|"
                        th:postId="${post.id}"
                        onclick="determineLike(this.getAttribute('postId'))"></i>
 
+                    <i sec:authorize="isAnonymous()"
+                       class="fa-regular fa-heart"
+                       th:id="|loveImg${post.id}|"
+                       th:postId="${post.id}"
+                       onclick="alertFunc()"></i>
+
+
                     <span th:id="|loveCount${post.id}|" th:text="${post.loveCount}"></span>
+
+<!--                    th:if="${session.loginedUserName != null and post.getUser().getUserName() != session.loginedUserName }"-->
+
                 </td>
             </tr>
             </tbody>
@@ -123,6 +135,11 @@
                 if (httpRequest.status === 200) {
                     var result = httpRequest.response;
 
+                    if (result.myPost === "yes") {
+                        alert('자신의 글은 추천할 수 없습니다.');
+                        return;
+                    }
+
                     if (result.check === "loved") {
                         document.getElementById("loveImg" + id).className = "fa-solid fa-heart";
                     }
@@ -147,6 +164,11 @@
         httpRequest.send(JSON.stringify(reqJson));
 
     }
+
+    function alertFunc() {
+        alert('로그인 해주세요')
+    }
+
 
 </script>
 

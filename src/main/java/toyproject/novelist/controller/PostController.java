@@ -72,47 +72,57 @@ public class PostController {
     }
 
 
-    // 좋아요기능 (비동기)
+     //좋아요기능 (비동기)
     @ResponseBody
     @PostMapping("/{postId}/likeAndHateByAjax")
     public Map<String, Object> loveByAjax(@PathVariable("postId") Long postId, @AuthenticationPrincipal SessionUser user) {
 
         Map<String, Object> returnMap = new HashMap<>();
-        System.out.println("check=====" + user);
 
         String logInedUserEmail = user.getEmail();
-        User logInedUser = userService.findByEmail(logInedUserEmail).get();
-        Long userId = logInedUser.getId();
-
-        Post findPost = postService.findOne(postId);
-
-        Love findLove = loveService.findByUserAndPost(userId, postId);
 
 
+        if (userService.findByEmail(logInedUserEmail).isPresent()) {
+            User logInedUser = userService.findByEmail(logInedUserEmail).get();
 
-        if (findLove == null) {
-            Love love = new Love(logInedUser, findPost);
+            Long userId = logInedUser.getId();
 
-            // setPost 안해도 연관관계 편의메서드 실행되나??
+            Post findPost = postService.findOne(postId);
 
-            loveService.join(love);
+            if (findPost.getUser() == logInedUser) {
+                returnMap.put("myPost", "yes");
+                return returnMap;
+            }
 
-            returnMap.put("check", "loved");
+            Love findLove = loveService.findByUserAndPost(userId, postId);
+
+            if (findLove == null) {
+                Love love = new Love(logInedUser, findPost);
+
+                // setPost 안해도 연관관계 편의메서드 실행되나??
+
+                loveService.join(love);
+
+                returnMap.put("check", "loved");
 
 
-        } else {
-            loveService.deleteLove(findLove.getId());
+            } else {
+                loveService.deleteLove(findLove.getId());
 
-            returnMap.put("check", "canceled");
+                returnMap.put("check", "canceled");
+            }
+
+            findPost.setLoveCount(findPost.getLoves().size());
+
+            // 왜 이걸 안쓰면 db에 반영이 안되지?????????????
+            postService.join(findPost);
+
+            returnMap.put("count", findPost.getLoveCount());
         }
-
-        findPost.setLoveCount(findPost.getLoves().size());
-
-        // 왜 이걸 안쓰면 db에 반영이 안되지?????????????
-        postService.join(findPost);
-
-        returnMap.put("count", findPost.getLoveCount());
 
         return returnMap;
     }
+
+
+
 }

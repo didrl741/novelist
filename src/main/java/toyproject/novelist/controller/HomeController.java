@@ -32,7 +32,7 @@ public class HomeController {
     private final UserService userService;
 
     @GetMapping("/")
-    public String home(Model model, @RequestParam(defaultValue = "1") int page, @AuthenticationPrincipal SessionUser user) {
+    public String home(Model model, @RequestParam(defaultValue = "1") int page, @AuthenticationPrincipal SessionUser user) throws Exception {
 
         int totalListCnt = postService.findAllCnt();
         Pagination pagination = new Pagination(totalListCnt, page);
@@ -44,11 +44,14 @@ public class HomeController {
 
         if (user != null) {
             System.out.println("userEmail ====" + user.getEmail());
-            User logInedUser = userService.findByEmail(user.getEmail()).get();
-            Long logInedUserId = logInedUser.getId();
-            for (Post post : postList) {
-                if (loveService.findByUserAndPost(logInedUserId, post.getId()) != null) {
-                    post.setLovedByLogInedUser(true);
+            if (userService.findByEmail(user.getEmail()).isPresent()) {
+
+                User logInedUser = userService.findByEmail(user.getEmail()).get();
+                Long logInedUserId = logInedUser.getId();
+                for (Post post : postList) {
+                    if (loveService.findByUserAndPost(logInedUserId, post.getId()) != null) {
+                        post.setLovedByLogInedUser(true);
+                    }
                 }
             }
         }
@@ -61,21 +64,13 @@ public class HomeController {
         model.addAttribute("postList", postList);
         model.addAttribute("wordFive", wordFive);
 
+
         return "index";
+
     }
 
     @GetMapping("/test")
-    public String test() {
-
-
-        for(int i=0; i<30; i++) {
-            Post post = new Post();
-            User user = new User("testMan", "test@naver.com", Role.USER);
-            post.setUser(user);
-            post.setContent("테스트내용입니다 " + i);
-            post.setPostDate(LocalDateTime.now());
-            postService.join(post);
-        }
+    public String test1() {
 
         return "index";
     }
