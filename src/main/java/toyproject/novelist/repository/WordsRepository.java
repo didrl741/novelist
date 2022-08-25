@@ -20,12 +20,11 @@ public class WordsRepository {
 
     // 테스트메서드 필수.
     public Words findWords() {
-        String query = "select w from Words w";
 
         Words words;
 
         try {
-            words = em.createQuery(query, Words.class)
+            words = em.createQuery("select w from Words w", Words.class)
                     .getSingleResult();
         } catch ( NonUniqueResultException e ) { // 엔티티 없으면 null 반환
             return null;

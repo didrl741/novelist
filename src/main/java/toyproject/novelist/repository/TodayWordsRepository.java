@@ -24,21 +24,16 @@ public class TodayWordsRepository {
 
     // 테스트메서드 필수.
     public TodayWords findTodayWords() {
-        String query = "select t from TodayWords t";
 
         TodayWords todayWords;
 
         try {
-            todayWords = em.createQuery(query, TodayWords.class)
+            todayWords = em.createQuery("select t from TodayWords t", TodayWords.class)
                     .getSingleResult();
         } catch ( NonUniqueResultException e ) { // 엔티티 없으면 null 반환
             return null;
         }
         return todayWords;
-    }
-
-    public void changeWords(Long todayWordsId) {
-        // 단어 바꾸는 메소드
     }
 }
 

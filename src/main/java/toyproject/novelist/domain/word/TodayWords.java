@@ -47,4 +47,26 @@ public class TodayWords {
 
         return wordFive;
     }
+
+    public void changeWords(String[] wordArr, LocalDate localDate) {
+        this.word1 = wordArr[0];
+        this.word2 = wordArr[1];
+        this.word3 = wordArr[2];
+        this.word4 = wordArr[3];
+        this.word5 = wordArr[4];
+
+        this.localDate = localDate;
+    }
+
+    @Override
+    public String toString() {
+        return "TodayWords{" +
+                "word1='" + word1 + '\'' +
+                ", word2='" + word2 + '\'' +
+                ", word3='" + word3 + '\'' +
+                ", word4='" + word4 + '\'' +
+                ", word5='" + word5 + '\'' +
+                ", localDate=" + localDate +
+                '}';
+    }
 }

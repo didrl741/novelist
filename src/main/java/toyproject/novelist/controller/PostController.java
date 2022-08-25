@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -114,7 +115,7 @@ public class PostController {
 
             findPost.setLoveCount(findPost.getLoves().size());
 
-            // 왜 이걸 안쓰면 db에 반영이 안되지?????????????
+            // 왜 이걸 안쓰면 db에 반영이 안되지????????????? -> 트랜잭션?
             postService.join(findPost);
 
             returnMap.put("count", findPost.getLoveCount());

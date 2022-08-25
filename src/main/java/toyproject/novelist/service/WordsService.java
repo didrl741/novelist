@@ -3,6 +3,7 @@ package toyproject.novelist.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import toyproject.novelist.domain.word.TodayWords;
 import toyproject.novelist.domain.word.Words;
 import toyproject.novelist.repository.WordsRepository;
 
@@ -21,5 +22,9 @@ public class WordsService {
     @Transactional
     public void addWord(String word) {
         wordsRepository.addWord(word);
+    }
+
+    public Words findWords() {
+        return wordsRepository.findWords();
     }
 }

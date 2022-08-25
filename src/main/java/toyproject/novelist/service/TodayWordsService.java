@@ -23,8 +23,4 @@ public class TodayWordsService {
         return todayWordsRepository.findTodayWords();
     }
 
-    @Transactional
-    public void changeWords(Long todayWordsId) {
-        todayWordsRepository.changeWords(todayWordsId);
-    }
 }
