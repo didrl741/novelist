@@ -71,6 +71,14 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void updateUserInformation(User user, String name, String auth_mail, String password) {
+        user.update(name);
+        user.changeAuth_Mail(auth_mail);
+        user.changePW(password);
+
+        userRepository.save(user);
+    }
+
     public void sendMail(MailForm mailForm) throws MessagingException {
 
         MimeMessage message = javaMailSender.createMimeMessage();

@@ -14,5 +14,10 @@
         <p th:text="|email &#58; ${user.email}|"></p>
         <p th:text="|${user.username} 님, 반가워요|"></p>
 
+        <div>
+            <a th:href="@{/userInfo/change}">회원정보 수정</a>
+        </div>
+    </div>
+
 </body>
 </html>

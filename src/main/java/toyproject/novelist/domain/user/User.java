@@ -70,4 +70,9 @@ public class User extends BaseTimeEntity {
 
         this.password = enCodePW(password);
     }
+
+    public void changeAuth_Mail(String auth_email) {
+
+        this.auth_email = auth_email;
+    }
 }

@@ -149,4 +149,36 @@ public class UserController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/userInfo/change")
+    public String changeUserInformationForm(Model model) {
+
+        model.addAttribute("userForm", new UserForm());
+
+        return "members/changeInfo";
+    }
+
+    @PostMapping("/userInfo/change")
+    public String changeUserInformation(@Validated @ModelAttribute("userForm") UserForm userForm, BindingResult result) {
+
+        User user = userService.findByEmail(userForm.getEmail()).orElse(null);
+
+        if (!StringUtils.hasText(userForm.getName())) {
+
+            result.rejectValue("name", "required", null, null);
+        }
+
+        if (!StringUtils.hasText(userForm.getPassword())) {
+
+            result.rejectValue("password", "required", null, null);
+        }
+
+        if (result.hasErrors()) {
+            return "members/changeInfo";
+        }
+
+        userService.updateUserInformation(user, userForm.getName(), userForm.getAuth_email(), userForm.getPassword());
+
+        return "redirect:/";
+    }
 }
