@@ -17,14 +17,16 @@ public class SessionUser implements UserDetails, Serializable {
     private String name;
     private String email;
     private String password;
+    private String auth_email;
 
     private Set<GrantedAuthority> authorities;
 
-    public SessionUser(String name, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public SessionUser(String name, String email, String password, String auth_email, Collection<? extends GrantedAuthority> authorities) {
 
         this.name = name;
         this.email = email;
         this.password = password;
+        this.auth_email = auth_email;
         this.authorities = Collections.unmodifiableSet(sortAuthorities(authorities));
     }
 
@@ -47,6 +49,8 @@ public class SessionUser implements UserDetails, Serializable {
     public String getEmail() {
         return email;
     }
+
+    public String getAuth_email() { return auth_email; }
 
     @Override
     public boolean isAccountNonExpired() {

@@ -115,7 +115,7 @@ public class UserController {
         System.out.println("user =====" + user);
         model.addAttribute("user", user);
 
-        return "members/memberInfo";
+        return "members/userInfo";
     }
 
     // 비밀번호 찾기 페이지로 이동
@@ -150,32 +150,20 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/userInfo/change")
-    public String changeUserInformationForm(Model model) {
+    // 회원 정보 수정 페이지 이동
+    @GetMapping("/userInfo/update")
+    public String updateUserInformationForm(Model model, @AuthenticationPrincipal SessionUser user) {
 
         model.addAttribute("userForm", new UserForm());
+        model.addAttribute("user", user);
 
-        return "members/changeInfo";
+        return "members/updateInfo";
     }
 
-    @PostMapping("/userInfo/change")
-    public String changeUserInformation(@Validated @ModelAttribute("userForm") UserForm userForm, BindingResult result) {
+    @PostMapping("/userInfo/update")
+    public String updateUserInformation(@Validated @ModelAttribute("userForm") UserForm userForm, BindingResult result) {
 
         User user = userService.findByEmail(userForm.getEmail()).orElse(null);
-
-        if (!StringUtils.hasText(userForm.getName())) {
-
-            result.rejectValue("name", "required", null, null);
-        }
-
-        if (!StringUtils.hasText(userForm.getPassword())) {
-
-            result.rejectValue("password", "required", null, null);
-        }
-
-        if (result.hasErrors()) {
-            return "members/changeInfo";
-        }
 
         userService.updateUserInformation(user, userForm.getName(), userForm.getAuth_email(), userForm.getPassword());
 

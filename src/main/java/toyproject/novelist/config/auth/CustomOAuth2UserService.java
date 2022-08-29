@@ -41,7 +41,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         User user = saveOrUpdate(attributes);
         List<GrantedAuthority> auth = new ArrayList<>();
         auth.add(new SimpleGrantedAuthority(Role.USER.getKey()));
-        httpSession.setAttribute("user", new SessionUser(user.getName(), user.getEmail(), user.getPassword(), auth));
+        httpSession.setAttribute("user", new SessionUser(user.getName(), user.getEmail(), user.getPassword(), user.getAuth_email(), auth));
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),

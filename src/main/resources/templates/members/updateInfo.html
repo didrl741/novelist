@@ -9,24 +9,23 @@
     <form role="form" th:action th:object="${userForm}" method="post">
 
         <div class="form-group">
-            <label th:for="name">이름</label>
-            <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="아이디를 입력하세요" required th:errorclass="field-error">
+            <label th:for="email">e-mail</label>
+            <input readonly type="email" name="email" id="email" class="form-control" th:placeholder="${user.email}" required th:errorclass="field-error">
+            <div class="field-error" th:errors="*{email}">
+                이메일 오류
+            </div>
+        </div>
+        <div class="form-group">
+            <label th:for="name">name</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control" th:value="${user.username}" th:placeholder="${user.username}" required th:errorclass="field-error">
             <div class="field-error" th:errors="*{name}">
                 이름 오류
             </div>
         </div>
 
         <div class="form-group">
-            <label th:for="email">e-mail</label>
-            <input readonly type="email" id="email" th:field="*{email}" class="form-control" placeholder="name@example.com" required th:errorclass="field-error">
-            <div class="field-error" th:errors="*{email}">
-                이메일 오류
-            </div>
-        </div>
-
-        <div class="form-group">
             <label th:for="password">비밀번호</label>
-            <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="********" required th:errorclass="field-error">
+            <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="*******" required th:errorclass="field-error">
             <div class="field-error" th:errors="*{password}">
                 비밀번호 오류
             </div>
@@ -34,7 +33,7 @@
 
         <div class="form-group">
             <label th:for="auth_email">비밀번호 재발급용 이메일</label>
-            <input type="email" id="auth_email" th:field="*{auth_email}" class="form-control" placeholder="name@example.com">
+            <input type="email" id="auth_email" th:field="*{auth_email}" class="form-control" th:placeholder="${user.auth_email}">
         </div>
 
         <button type="submit" class="btn btn-primary">가입하기</button>

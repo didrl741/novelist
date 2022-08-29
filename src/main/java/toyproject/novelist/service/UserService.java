@@ -72,9 +72,18 @@ public class UserService {
     }
 
     public void updateUserInformation(User user, String name, String auth_mail, String password) {
-        user.update(name);
-        user.changeAuth_Mail(auth_mail);
-        user.changePW(password);
+
+        if (name != null) {
+            user.update(name);
+        }
+
+        if (auth_mail != null) {
+            user.changeAuth_Mail(auth_mail);
+        }
+
+        if (password != null) {
+            user.changePW(password);
+        }
 
         userRepository.save(user);
     }

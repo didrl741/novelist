@@ -36,6 +36,6 @@ public class PrincipalDetailService implements UserDetailsService {
 
         auth.add(new SimpleGrantedAuthority((Role.USER.getKey())));
 
-        return new SessionUser(principal.getName(), principal.getEmail(), principal.getPassword(), auth);
+        return new SessionUser(principal.getName(), principal.getEmail(), principal.getPassword(), principal.getAuth_email(), auth);
     }
 }
