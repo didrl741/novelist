@@ -1,8 +1,11 @@
 package toyproject.novelist.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import toyproject.novelist.domain.user.User;
@@ -11,7 +14,6 @@ import toyproject.novelist.repository.UserRepository;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 import java.util.Random;
 
@@ -88,17 +90,16 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Async
     public void sendMail(MailForm mailForm) throws MessagingException {
 
-        MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
-
-        mimeMessageHelper.setTo(mailForm.getAddress());
-        mimeMessageHelper.setSubject(mailForm.getTitle());
-        mimeMessageHelper.setText(mailForm.getMessage(), true);
-
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(mailForm.getAddress());
+        message.setSubject(mailForm.getTitle());
+        message.setText(mailForm.getMessage());
         javaMailSender.send(message);
 
+        System.out.println("========= Mail !!! ============");
 
     }
 }

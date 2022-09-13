@@ -25,6 +25,20 @@ spring:
   profiles:
     include: oauth
 
+  # spring-mail 설정
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: novelist456@gmail.com
+    password: zlpdwptdkqgwskai
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+
   session:
     store-type: jdbc
     jdbc:
