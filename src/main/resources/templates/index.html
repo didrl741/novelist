@@ -36,82 +36,154 @@
         </div>
 
         <a class="btn btn-lg btn-dark" href="/write">글쓰러 가기</a>
-        <a class="btn btn-lg btn-dark" href="/test">테스트post생성</a>
 
-    </div>
-
-    <div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>작성자</th>
-                <th>이메일</th>
-                <th>내용</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="post : ${postList}">
-
-                <td th:text="${post.user.name}" ></td>
-                <td th:text="${post.user.email}" ></td>
-                <td th:text="${post.content}" ></td>
-                <td>
-                    <i sec:authorize="isAuthenticated()"
-                       th:if="${post.isLovedByLogInedUser == true }"
-                       class="fa-solid fa-heart"
-                       th:id="|loveImg${post.id}|"
-                       th:postId="${post.id}"
-                       onclick="determineLike(this.getAttribute('postId'))"></i>
-
-                    <i sec:authorize="isAuthenticated()"
-                       th:if="${post.isLovedByLogInedUser != true}"
-                       class="fa-regular fa-heart"
-                       th:id="|loveImg${post.id}|"
-                       th:postId="${post.id}"
-                       onclick="determineLike(this.getAttribute('postId'))"></i>
-
-                    <i sec:authorize="isAnonymous()"
-                       class="fa-regular fa-heart"
-                       th:id="|loveImg${post.id}|"
-                       th:postId="${post.id}"
-                       onclick="alertFunc()"></i>
-
-
-                    <span th:id="|loveCount${post.id}|" th:text="${post.loveCount}"></span>
-
-<!--                    th:if="${session.loginedUserName != null and post.getUser().getUserName() != session.loginedUserName }"-->
-
-                </td>
-            </tr>
-            </tbody>
-        </table>
     </div>
 
 </div> <!-- /container -->
 
-<!--페이징-->
-<nav aria-label="Page navigation example">
-    <ul class="pagination pagination-sm justify-content-center mt-5 mb-5">
-        <li class="page-item">
-            <!--HomeController의 인자 page와 상호작용-->
-            <a class="page-link mx-5" th:href="@{/(page=${pagination.prevBlock})}" aria-label="Previous" style="border-radius: 100px;">
-                <span aria-hidden="true">&lt</span>
-            </a>
+
+<!-- 탭 버튼 -->
+<div class="container">
+    <ul class="nav nav-tabs mt-5 mb-4" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">좋아요 순</button>
         </li>
-        <th:block th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
-            <li class="page-item"
-                th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
-                th:each="pageButton : ${#numbers.sequence(start, end)}">
-                <a class="page-link mx-2" th:href="@{/(page = ${pageButton})}" th:text="${pageButton}" style="border-radius: 100px;"></a>
-            </li>
-        </th:block>
-        <li class="page-item">
-            <a class="page-link mx-5" th:href="@{/(page=${pagination.nextBlock})}" aria-label="Next" style="border-radius: 100px;">
-                <span aria-hidden="true">&gt</span>
-            </a>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">최신순</button>
         </li>
     </ul>
-</nav>
+
+    <!-- 탭 내용 -->
+    <div class="tab-content" id="myTabContent">
+
+        <!-- 좋아요 순 -->
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>작성자</th>
+                        <th>이메일</th>
+                        <th>내용</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="post : ${postListByLoveCount}">
+
+                        <td th:text="${post.user.name}" ></td>
+                        <td th:text="${post.user.email}" ></td>
+                        <td th:text="${post.content}" ></td>
+                        <td>
+                            <i sec:authorize="isAuthenticated()"
+                               th:if="${post.isLovedByLogInedUser == true }"
+                               class="fa-solid fa-heart"
+                               th:id="|loveImg${post.id}|"
+                               th:postId="${post.id}"
+                               onclick="determineLike(this.getAttribute('postId'))"></i>
+
+                            <i sec:authorize="isAuthenticated()"
+                               th:if="${post.isLovedByLogInedUser != true}"
+                               class="fa-regular fa-heart"
+                               th:id="|loveImg${post.id}|"
+                               th:postId="${post.id}"
+                               onclick="determineLike(this.getAttribute('postId'))"></i>
+
+                            <i sec:authorize="isAnonymous()"
+                               class="fa-regular fa-heart"
+                               th:id="|loveImg${post.id}|"
+                               th:postId="${post.id}"
+                               onclick="alertFunc()"></i>
+
+
+                            <span th:id="|loveCount${post.id}|" th:text="${post.loveCount}"></span>
+
+                            <!--                    th:if="${session.loginedUserName != null and post.getUser().getUserName() != session.loginedUserName }"-->
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 최신 순 -->
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>작성자</th>
+                        <th>이메일</th>
+                        <th>내용</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="post : ${postListByDate}">
+
+                        <td th:text="${post.user.name}" ></td>
+                        <td th:text="${post.user.email}" ></td>
+                        <td th:text="${post.content}" ></td>
+                        <td>
+                            <i sec:authorize="isAuthenticated()"
+                               th:if="${post.isLovedByLogInedUser == true }"
+                               class="fa-solid fa-heart"
+                               th:id="|loveImg${post.id}|"
+                               th:postId="${post.id}"
+                               onclick="determineLike(this.getAttribute('postId'))"></i>
+
+                            <i sec:authorize="isAuthenticated()"
+                               th:if="${post.isLovedByLogInedUser != true}"
+                               class="fa-regular fa-heart"
+                               th:id="|loveImg${post.id}|"
+                               th:postId="${post.id}"
+                               onclick="determineLike(this.getAttribute('postId'))"></i>
+
+                            <i sec:authorize="isAnonymous()"
+                               class="fa-regular fa-heart"
+                               th:id="|loveImg${post.id}|"
+                               th:postId="${post.id}"
+                               onclick="alertFunc()"></i>
+
+
+                            <span th:id="|loveCount${post.id}|" th:text="${post.loveCount}"></span>
+
+                            <!--                    th:if="${session.loginedUserName != null and post.getUser().getUserName() != session.loginedUserName }"-->
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!--페이징-->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-sm justify-content-center mt-5 mb-5">
+            <li class="page-item">
+                <!--HomeController의 인자 page와 상호작용-->
+                <a class="page-link mx-5" th:href="@{/(page=${pagination.prevBlock})}" aria-label="Previous" style="border-radius: 100px;">
+                    <span aria-hidden="true">&lt</span>
+                </a>
+            </li>
+            <th:block th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+                <li class="page-item"
+                    th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+                    th:each="pageButton : ${#numbers.sequence(start, end)}">
+                    <a class="page-link mx-2" th:href="@{/(page = ${pageButton})}" th:text="${pageButton}" style="border-radius: 100px;"></a>
+                </li>
+            </th:block>
+            <li class="page-item">
+                <a class="page-link mx-5" th:href="@{/(page=${pagination.nextBlock})}" aria-label="Next" style="border-radius: 100px;">
+                    <span aria-hidden="true">&gt</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
 
 </body>
 

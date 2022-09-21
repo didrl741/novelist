@@ -32,4 +32,11 @@ public class PostRepository {
                 .setMaxResults(pageSize)
                 .getResultList();
     }
+
+    public List<Post> findByLoveCount(int startIdx, int pageSize) {
+        return em.createQuery("select p from Post p order by p.loveCount desc", Post.class)
+                .setFirstResult(startIdx)
+                .setMaxResults(pageSize)
+                .getResultList();
+    }
 }

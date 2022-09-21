@@ -40,7 +40,8 @@ public class HomeController {
         int startIdx = pagination.getStartIndex();
         int pageSize = pagination.getPageSize();
 
-        List<Post> postList = postService.findByLatestDate(startIdx, pageSize);
+        List<Post> postListByDate = postService.findByLatestDate(startIdx, pageSize);
+        List<Post> postListByLoveCount = postService.findByLoveCount(startIdx, pageSize);
 
         if (user != null) {
             System.out.println("userEmail ====" + user.getEmail());
@@ -48,11 +49,19 @@ public class HomeController {
 
                 User logInedUser = userService.findByEmail(user.getEmail()).get();
                 Long logInedUserId = logInedUser.getId();
-                for (Post post : postList) {
+
+                for (Post post : postListByDate) {
                     if (loveService.findByUserAndPost(logInedUserId, post.getId()) != null) {
                         post.setLovedByLogInedUser(true);
                     }
                 }
+
+                for (Post post : postListByLoveCount) {
+                    if (loveService.findByUserAndPost(logInedUserId, post.getId()) != null) {
+                        post.setLovedByLogInedUser(true);
+                    }
+                }
+
             }
         }
 
@@ -61,7 +70,8 @@ public class HomeController {
 
 
         model.addAttribute("pagination", pagination);
-        model.addAttribute("postList", postList);
+        model.addAttribute("postListByDate", postListByDate);
+        model.addAttribute("postListByLoveCount", postListByLoveCount);
         model.addAttribute("wordFive", wordFive);
 
 
@@ -69,9 +79,4 @@ public class HomeController {
 
     }
 
-    @GetMapping("/test")
-    public String test1() {
-
-        return "index";
-    }
 }

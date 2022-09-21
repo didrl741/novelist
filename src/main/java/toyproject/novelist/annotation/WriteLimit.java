@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = WriteValidator.class)
 public @interface WriteLimit {
-    String message() default "단어가 다 포함됐는지 확인해주세요.";
+    String message() default "단어가 다 포함됐는지 확인해주세요. 글은 20자 이상이여야 합니다.";
 
     Class[] groups() default {};
     Class[] payload() default {};

@@ -46,7 +46,7 @@ public class Post {
     //== 연관관계 편의 메서드 ==//
     public void setUser(User user) {
         this.user = user;
-//        user.getPosts().add(this); 필요할 시 추가
+        user.getPosts().add(this);
     }
 
     @Builder

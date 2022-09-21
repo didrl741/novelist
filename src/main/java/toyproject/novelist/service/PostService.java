@@ -32,4 +32,8 @@ public class PostService {
     public List<Post> findByLatestDate(int startIdx, int pageSize) {
         return postRepository.findByLatestDate(startIdx, pageSize);
     }
+
+    public List<Post> findByLoveCount(int startIdx, int pageSize) {
+        return postRepository.findByLoveCount(startIdx, pageSize);
+    }
 }
