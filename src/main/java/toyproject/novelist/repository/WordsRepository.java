@@ -18,7 +18,6 @@ public class WordsRepository {
         em.persist(words);
     }
 
-    // 테스트메서드 필수.
     public Words findWords() {
 
         Words words;
@@ -30,10 +29,5 @@ public class WordsRepository {
             return null;
         }
         return words;
-    }
-
-    public void addWord(String word) {
-        Words words = findWords();
-        words.getWordCollection().add(word);
     }
 }

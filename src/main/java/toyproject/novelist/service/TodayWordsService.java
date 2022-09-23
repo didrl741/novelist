@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import toyproject.novelist.domain.word.TodayWords;
 import toyproject.novelist.repository.TodayWordsRepository;
 
+import java.time.LocalDate;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -23,4 +25,8 @@ public class TodayWordsService {
         return todayWordsRepository.findTodayWords();
     }
 
+    @Transactional
+    public void changeWords(String[] wordArr, LocalDate localDate) {
+        todayWordsRepository.changeWords(wordArr, localDate);
+    }
 }

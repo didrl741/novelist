@@ -6,6 +6,7 @@ import toyproject.novelist.domain.word.TodayWords;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NonUniqueResultException;
+import java.time.LocalDate;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,12 +18,6 @@ public class TodayWordsRepository {
         em.persist(todayWords);
     }
 
-    // 삭제하고 생성할지 아니면 update로 할 지 고민이다. 일단 만들어두자.
-    public void delete(TodayWords todayWords) {
-        em.remove(todayWords);
-    }
-
-    // 테스트메서드 필수.
     public TodayWords findTodayWords() {
 
         TodayWords todayWords;
@@ -34,6 +29,11 @@ public class TodayWordsRepository {
             return null;
         }
         return todayWords;
+    }
+
+    public void changeWords(String[] wordArr, LocalDate localDate) {
+        TodayWords todayWords = findTodayWords();
+        todayWords.changeWords(wordArr, localDate);
     }
 }
 

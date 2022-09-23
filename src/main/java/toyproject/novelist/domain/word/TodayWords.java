@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 public class TodayWords {
 
@@ -48,6 +48,7 @@ public class TodayWords {
         return wordFive;
     }
 
+    // 서비스계층으로 위임
     public void changeWords(String[] wordArr, LocalDate localDate) {
         this.word1 = wordArr[0];
         this.word2 = wordArr[1];

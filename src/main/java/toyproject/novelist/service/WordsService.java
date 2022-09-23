@@ -19,11 +19,6 @@ public class WordsService {
         return words.getId();
     }
 
-    @Transactional
-    public void addWord(String word) {
-        wordsRepository.addWord(word);
-    }
-
     public Words findWords() {
         return wordsRepository.findWords();
     }

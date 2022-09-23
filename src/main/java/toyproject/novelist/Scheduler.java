@@ -43,15 +43,7 @@ public class Scheduler {
     @Scheduled(cron = "0 0 0 * * *")
     public void wordChange(){
 
-        TodayWords todayWords = todayWordsService.findTodayWords();
-        Words words = wordsService.findWords();
-
-        String[] wordsList = words.makeRandomWords();
-
-
-        todayWords.changeWords(words.makeRandomWords(), LocalDate.now());
-
-        System.out.println("word =====" + todayWords);
+        todayWordsService.changeWords(wordsService.findWords().makeRandomWords(), LocalDate.now());
     }
 
 }
