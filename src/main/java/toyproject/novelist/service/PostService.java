@@ -36,4 +36,10 @@ public class PostService {
     public List<Post> findByLoveCount(int startIdx, int pageSize) {
         return postRepository.findByLoveCount(startIdx, pageSize);
     }
+
+    @Transactional
+    public void setLoveCnt(Long postId, int loveCount) {
+        Post post = postRepository.findOne(postId);
+        post.changeLoveCount(loveCount);
+    }
 }

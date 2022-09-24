@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 public class Post {
 
@@ -47,6 +47,14 @@ public class Post {
     public void setUser(User user) {
         this.user = user;
         user.getPosts().add(this);
+    }
+
+    public void changeLoveCount(int loveCount) {
+        this.loveCount = loveCount;
+    }
+
+    public void setLovedByLogInedUser(boolean lovedByLogInedUser) {
+        this.isLovedByLogInedUser = lovedByLogInedUser;
     }
 
     @Builder

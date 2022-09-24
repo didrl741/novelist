@@ -113,10 +113,15 @@ public class PostController {
                 returnMap.put("check", "canceled");
             }
 
-            findPost.setLoveCount(findPost.getLoves().size());
 
-            // 왜 이걸 안쓰면 db에 반영이 안되지????????????? -> 트랜잭션?
-            postService.join(findPost);
+            // 방법 1. 엔티티 필드에서 수정 -> 이것만 있으면 db에 반영이 안 된다.
+            // findPost.changeLoveCount(findPost.getLoves().size());
+
+            // 이것도 써줘야 한다.
+            //postService.join(findPost);
+
+            // 방법 2. 서비스 계층에서 처리
+            postService.setLoveCnt(postId,findPost.getLoves().size());
 
             returnMap.put("count", findPost.getLoveCount());
         }
