@@ -1,15 +1,13 @@
 package toyproject.novelist.service;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import toyproject.novelist.domain.Love;
 import toyproject.novelist.domain.Post;
+import toyproject.novelist.domain.user.Member;
 import toyproject.novelist.domain.user.Role;
-import toyproject.novelist.domain.user.User;
-import toyproject.novelist.domain.word.TodayWords;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,8 +28,8 @@ class LoveServiceTest {
         System.out.println("loveCount == " + post.getLoves());
 
         //when
-        User user = new User();
-        Love love = new Love(user, post);
+        Member member = new Member();
+        Love love = new Love(member, post);
 
         //then
         System.out.println("loveCount == " + post.getLoves());
@@ -43,13 +41,13 @@ class LoveServiceTest {
         Post post = new Post();
         postService.join(post);
 
-        User user = new User("song", "didrl741@naver.com", Role.USER);
-        userService.join(user);
-        Love love = new Love(user, post);
+        Member member = new Member("song", "didrl741@naver.com", Role.USER);
+        userService.join(member);
+        Love love = new Love(member, post);
         loveService.join(love);
 
         //when
-        Love findLove = loveService.findByUserAndPost(user.getId(), post.getId());
+        Love findLove = loveService.findByUserAndPost(member.getId(), post.getId());
 
         //then
         assertEquals(love, findLove);

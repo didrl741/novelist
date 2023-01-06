@@ -2,10 +2,7 @@ package toyproject.novelist.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -16,17 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import toyproject.novelist.config.auth.LoginUser;
 import toyproject.novelist.config.auth.dto.SessionUser;
+import toyproject.novelist.domain.user.Member;
 import toyproject.novelist.domain.user.Role;
-import toyproject.novelist.domain.user.User;
 import toyproject.novelist.dto.UserForm;
 import toyproject.novelist.service.UserService;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
-import java.util.Random;
 
 @Controller
 @RequiredArgsConstructor
@@ -101,8 +95,8 @@ public class UserController {
             return "members/createMemberForm";
         }
 
-        User user = new User(userForm.getName(), userForm.getEmail(), Role.USER, userForm.getPassword(), userForm.getAuth_email());
-        userService.join(user);
+        Member member = new Member(userForm.getName(), userForm.getEmail(), Role.USER, userForm.getPassword(), userForm.getAuth_email());
+        userService.join(member);
 
 
         return "redirect:/";
@@ -133,19 +127,19 @@ public class UserController {
 
         System.out.println("========= findPW Logic START !!! ================");
 
-        User user = userService.findByEmail(userForm.getEmail()).orElse(null);
+        Member member = userService.findByEmail(userForm.getEmail()).orElse(null);
 
         System.out.println("======= FIND USER !! =====");
-        System.out.println(user);
+        System.out.println(member);
 
-        if (user == null) {
+        if (member == null) {
             System.out.println("====== USER is NULL !!! =======");
             result.reject("wrong", null, null);
 
             return "members/findPW";
         }
 
-        userService.sendMail(userService.setPWMessage(user));
+        userService.sendMail(userService.setPWMessage(member));
 
         return "redirect:/";
     }
@@ -163,9 +157,9 @@ public class UserController {
     @PostMapping("/userInfo/update")
     public String updateUserInformation(@Validated @ModelAttribute("userForm") UserForm userForm, BindingResult result) {
 
-        User user = userService.findByEmail(userForm.getEmail()).orElse(null);
+        Member member = userService.findByEmail(userForm.getEmail()).orElse(null);
 
-        userService.updateUserInformation(user, userForm.getName(), userForm.getAuth_email(), userForm.getPassword());
+        userService.updateUserInformation(member, userForm.getName(), userForm.getAuth_email(), userForm.getPassword());
 
         return "redirect:/";
     }

@@ -6,20 +6,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import toyproject.novelist.config.auth.LoginUser;
 import toyproject.novelist.config.auth.dto.SessionUser;
 import toyproject.novelist.domain.Pagination;
 import toyproject.novelist.domain.Post;
-import toyproject.novelist.domain.user.Role;
-import toyproject.novelist.domain.user.User;
+import toyproject.novelist.domain.user.Member;
 import toyproject.novelist.domain.word.TodayWords;
 import toyproject.novelist.service.LoveService;
 import toyproject.novelist.service.PostService;
 import toyproject.novelist.service.TodayWordsService;
 import toyproject.novelist.service.UserService;
 
-import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -47,8 +43,8 @@ public class HomeController {
             System.out.println("userEmail ====" + user.getEmail());
             if (userService.findByEmail(user.getEmail()).isPresent()) {
 
-                User logInedUser = userService.findByEmail(user.getEmail()).get();
-                Long logInedUserId = logInedUser.getId();
+                Member logInedMember = userService.findByEmail(user.getEmail()).get();
+                Long logInedUserId = logInedMember.getId();
 
                 for (Post post : postListByDate) {
                     if (loveService.findByUserAndPost(logInedUserId, post.getId()) != null) {

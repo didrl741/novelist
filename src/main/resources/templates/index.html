@@ -70,8 +70,8 @@
                     <tbody>
                     <tr th:each="post : ${postListByLoveCount}">
 
-                        <td th:text="${post.user.name}" ></td>
-                        <td th:text="${post.user.email}" ></td>
+                        <td th:text="${post.member.name}" ></td>
+                        <td th:text="${post.member.email}" ></td>
                         <td th:text="${post.content}" ></td>
                         <td>
                             <i sec:authorize="isAuthenticated()"
@@ -120,8 +120,8 @@
                     <tbody>
                     <tr th:each="post : ${postListByDate}">
 
-                        <td th:text="${post.user.name}" ></td>
-                        <td th:text="${post.user.email}" ></td>
+                        <td th:text="${post.member.name}" ></td>
+                        <td th:text="${post.member.email}" ></td>
                         <td th:text="${post.content}" ></td>
                         <td>
                             <i sec:authorize="isAuthenticated()"

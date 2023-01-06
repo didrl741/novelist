@@ -4,18 +4,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import toyproject.novelist.config.auth.LoginUser;
 import toyproject.novelist.config.auth.dto.SessionUser;
 import toyproject.novelist.domain.Love;
 import toyproject.novelist.domain.Post;
-import toyproject.novelist.domain.user.User;
+import toyproject.novelist.domain.user.Member;
 import toyproject.novelist.domain.word.TodayWords;
 import toyproject.novelist.dto.PostForm;
 import toyproject.novelist.service.LoveService;
@@ -23,11 +21,9 @@ import toyproject.novelist.service.PostService;
 import toyproject.novelist.service.TodayWordsService;
 import toyproject.novelist.service.UserService;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -59,12 +55,12 @@ public class PostController {
             return "post/createPostForm";
         }
 
-        User logInedUser = userService.findByEmail(user.getEmail()).get();
+        Member logInedMember = userService.findByEmail(user.getEmail()).get();
 
         TodayWords todayWords = todayWordsService.findTodayWords();
         String [] words = todayWords.makeArr();
 
-        Post post = new Post(postForm.getContent(), LocalDateTime.now(), logInedUser, todayWords);
+        Post post = new Post(postForm.getContent(), LocalDateTime.now(), logInedMember, todayWords);
 
         postService.join(post);
 
@@ -83,13 +79,13 @@ public class PostController {
 
 
         if (userService.findByEmail(logInedUserEmail).isPresent()) {
-            User logInedUser = userService.findByEmail(logInedUserEmail).get();
+            Member logInedMember = userService.findByEmail(logInedUserEmail).get();
 
-            Long userId = logInedUser.getId();
+            Long userId = logInedMember.getId();
 
             Post findPost = postService.findOne(postId);
 
-            if (findPost.getUser() == logInedUser) {
+            if (findPost.getMember() == logInedMember) {
                 returnMap.put("myPost", "yes");
                 return returnMap;
             }
@@ -97,7 +93,7 @@ public class PostController {
             Love findLove = loveService.findByUserAndPost(userId, postId);
 
             if (findLove == null) {
-                Love love = new Love(logInedUser, findPost);
+                Love love = new Love(logInedMember, findPost);
 
                 // setPost 안해도 연관관계 편의메서드 실행되나??
 

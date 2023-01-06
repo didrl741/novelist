@@ -10,14 +10,14 @@
 
         <div class="form-group">
             <label th:for="email">e-mail</label>
-            <input readonly type="email" name="email" id="email" class="form-control" th:placeholder="${user.email}" required th:errorclass="field-error">
+            <input readonly type="email" name="email" id="email" class="form-control" th:placeholder="${member.email}" required th:errorclass="field-error">
             <div class="field-error" th:errors="*{email}">
                 이메일 오류
             </div>
         </div>
         <div class="form-group">
             <label th:for="name">name</label>
-            <input type="text" id="name" th:field="*{name}" class="form-control" th:value="${user.username}" th:placeholder="${user.username}" required th:errorclass="field-error">
+            <input type="text" id="name" th:field="*{name}" class="form-control" th:value="${member.username}" th:placeholder="${member.username}" required th:errorclass="field-error">
             <div class="field-error" th:errors="*{name}">
                 이름 오류
             </div>
@@ -33,7 +33,7 @@
 
         <div class="form-group">
             <label th:for="auth_email">비밀번호 재발급용 이메일</label>
-            <input type="email" id="auth_email" th:field="*{auth_email}" class="form-control" th:placeholder="${user.auth_email}">
+            <input type="email" id="auth_email" th:field="*{auth_email}" class="form-control" th:placeholder="${member.auth_email}">
         </div>
 
         <button type="submit" class="btn btn-primary">가입하기</button>

@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import toyproject.novelist.domain.user.Member;
 import toyproject.novelist.domain.user.Role;
-import toyproject.novelist.domain.user.User;
 import toyproject.novelist.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class PrincipalDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        User principal = userRepository.findByEmail(email).orElse(null);
+        Member principal = userRepository.findByEmail(email).orElse(null);
 
         if (principal == null) {
             throw new UsernameNotFoundException(email);

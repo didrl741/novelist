@@ -1,12 +1,9 @@
 package toyproject.novelist.config.auth.dto;
 
-import lombok.Getter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import toyproject.novelist.domain.user.User;
 
 import java.io.Serializable;
 import java.util.*;

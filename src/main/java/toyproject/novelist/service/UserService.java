@@ -3,17 +3,14 @@ package toyproject.novelist.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import toyproject.novelist.domain.user.User;
+import toyproject.novelist.domain.user.Member;
 import toyproject.novelist.dto.MailForm;
 import toyproject.novelist.repository.UserRepository;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import java.util.Optional;
 import java.util.Random;
 
@@ -26,26 +23,26 @@ public class UserService {
 
     private final JavaMailSender javaMailSender;
 
-    public Optional<User> findByEmail(String email) {
+    public Optional<Member> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public User duplicateName(String name) {
+    public Member duplicateName(String name) {
 
         return userRepository.findByName(name).orElse(null);
     }
 
-    public User duplicateEmail(String email) {
+    public Member duplicateEmail(String email) {
 
         return userRepository.findByEmail(email).orElse(null);
     }
 
-    public void join(User user) {
+    public void join(Member member) {
 
-        userRepository.save(user);
+        userRepository.save(member);
     }
 
-    public MailForm setPWMessage(User user) {
+    public MailForm setPWMessage(Member member) {
         MailForm mail = new MailForm();
         int leftLimit = 48;
         int rightLimit = 90;
@@ -57,37 +54,37 @@ public class UserService {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
-        changePassword(user, password);
+        changePassword(member, password);
 
-        mail.setAddress(user.getAuth_email());
+        mail.setAddress(member.getAuth_email());
         mail.setTitle("NOVELIST 임시 비밀번호 안내 메일입니다.");
-        mail.setMessage("안녕하세요. " + user.getName() + "님의 임시 비밀번호 안내 메일입니다. "
-                + user.getName() + "님의 임시 비밀번호는 " + password + "입니다.");
+        mail.setMessage("안녕하세요. " + member.getName() + "님의 임시 비밀번호 안내 메일입니다. "
+                + member.getName() + "님의 임시 비밀번호는 " + password + "입니다.");
 
         return mail;
     }
 
-    public void changePassword(User user, String password) {
+    public void changePassword(Member member, String password) {
 
-        user.changePW(password);
-        userRepository.save(user);
+        member.changePW(password);
+        userRepository.save(member);
     }
 
-    public void updateUserInformation(User user, String name, String auth_mail, String password) {
+    public void updateUserInformation(Member member, String name, String auth_mail, String password) {
 
         if (name != null) {
-            user.update(name);
+            member.update(name);
         }
 
         if (auth_mail != null) {
-            user.changeAuth_Mail(auth_mail);
+            member.changeAuth_Mail(auth_mail);
         }
 
         if (password != null) {
-            user.changePW(password);
+            member.changePW(password);
         }
 
-        userRepository.save(user);
+        userRepository.save(member);
     }
 
     @Async

@@ -11,8 +11,8 @@
     <div th:replace="fragments/mybodyheader :: bodyHeader" />
     <div class="jumbotron">
 
-        <p th:text="|email &#58; ${user.email}|"></p>
-        <p th:text="|${user.username} 님, 반가워요|"></p>
+        <p th:text="|email &#58; ${member.email}|"></p>
+        <p th:text="|${member.username} 님, 반가워요|"></p>
 
         <div>
             <a th:href="@{/userInfo/update}">회원정보 수정</a>

@@ -12,8 +12,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import toyproject.novelist.config.auth.dto.OAuthAttributes;
 import toyproject.novelist.config.auth.dto.SessionUser;
+import toyproject.novelist.domain.user.Member;
 import toyproject.novelist.domain.user.Role;
-import toyproject.novelist.domain.user.User;
 import toyproject.novelist.repository.UserRepository;
 
 import javax.servlet.http.HttpSession;
@@ -38,23 +38,23 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        User user = saveOrUpdate(attributes);
+        Member member = saveOrUpdate(attributes);
         List<GrantedAuthority> auth = new ArrayList<>();
         auth.add(new SimpleGrantedAuthority(Role.USER.getKey()));
-        httpSession.setAttribute("user", new SessionUser(user.getName(), user.getEmail(), user.getPassword(), user.getAuth_email(), auth));
+        httpSession.setAttribute("user", new SessionUser(member.getName(), member.getEmail(), member.getPassword(), member.getAuth_email(), auth));
 
         return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
+                Collections.singleton(new SimpleGrantedAuthority(member.getRoleKey())),
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey());
     }
 
 
-    private User saveOrUpdate(OAuthAttributes attributes) {
-        User user = userRepository.findByEmail(attributes.getEmail())
+    private Member saveOrUpdate(OAuthAttributes attributes) {
+        Member member = userRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName()))
                 .orElse(attributes.toEntity());
 
-        return userRepository.save(user);
+        return userRepository.save(member);
     }
 }

@@ -4,8 +4,7 @@ package toyproject.novelist.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import toyproject.novelist.domain.user.User;
+import toyproject.novelist.domain.user.Member;
 import toyproject.novelist.domain.word.TodayWords;
 import toyproject.novelist.domain.word.TodayWordsEmbedded;
 
@@ -29,8 +28,8 @@ public class Post {
     private LocalDateTime postDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Love> loves = new ArrayList<Love>();
@@ -44,9 +43,9 @@ public class Post {
     private TodayWordsEmbedded todayWordsEmbedded;
 
     //== 연관관계 편의 메서드 ==//
-    public void setUser(User user) {
-        this.user = user;
-        user.getPosts().add(this);
+    public void setMember(Member member) {
+        this.member = member;
+        member.getPosts().add(this);
     }
 
     public void changeLoveCount(int loveCount) {
@@ -58,10 +57,10 @@ public class Post {
     }
 
     @Builder
-    public Post(String content, LocalDateTime postDate, User user, TodayWords todayWords) {
+    public Post(String content, LocalDateTime postDate, Member member, TodayWords todayWords) {
         this.content = content;
         this.postDate = postDate;
-        this.user = user;
+        this.member = member;
         this.loveCount = 0;
 
         this.todayWordsEmbedded = new TodayWordsEmbedded(todayWords);

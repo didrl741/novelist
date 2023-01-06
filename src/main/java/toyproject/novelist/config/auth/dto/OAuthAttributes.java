@@ -2,8 +2,7 @@ package toyproject.novelist.config.auth.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
-import toyproject.novelist.domain.user.User;
+import toyproject.novelist.domain.user.Member;
 import toyproject.novelist.domain.user.Role;
 
 import java.util.Map;
@@ -38,8 +37,8 @@ public class OAuthAttributes {
     }
 
 
-    public User toEntity() {
-        return User.builder()
+    public Member toEntity() {
+        return Member.builder()
                 .name(name)
                 .email(email)
                 .role(Role.USER)

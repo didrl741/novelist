@@ -16,11 +16,11 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @ToString
-public class User extends BaseTimeEntity {
+public class Member extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "member_id")
     private Long id;
 
     @Column(nullable = false)
@@ -36,18 +36,18 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<Post>();
 
     @Builder
-    public User(String name, String email, Role role) {
+    public Member(String name, String email, Role role) {
         this.name = name;
         this.email = email;
         this.role = role;
     }
 
     @Builder
-    public User(String name, String email, Role role, String password, String auth_email) {
+    public Member(String name, String email, Role role, String password, String auth_email) {
         this.name = name;
         this.email = email;
         this.role = role;
@@ -55,7 +55,7 @@ public class User extends BaseTimeEntity {
         this.auth_email = auth_email;
     }
 
-    public User update(String name) {
+    public Member update(String name) {
         this.name = name;
 
         return this;
