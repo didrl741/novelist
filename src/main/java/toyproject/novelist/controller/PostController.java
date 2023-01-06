@@ -41,7 +41,6 @@ public class PostController {
     private final LoveService loveService;
 
     @GetMapping("/write")
-
     public String createPostForm(Model model) {
 
         TodayWords todayWords = todayWordsService.findTodayWords();
