@@ -84,6 +84,8 @@ public class UserService {
             member.changePW(password);
         }
 
+        System.out.println("member1234 ===== " + member.toString()); // 변경된 member로 잘 출력 된다.
+
         userRepository.save(member);
     }
 

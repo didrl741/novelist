@@ -2,10 +2,11 @@ package toyproject.novelist.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public class UserForm {
 
     @NotEmpty(message = "회원 아이디는 필수입니다.")

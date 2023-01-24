@@ -21,6 +21,7 @@ import toyproject.novelist.service.UserService;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -107,6 +108,7 @@ public class UserController {
     public String userInfo(Model model, @AuthenticationPrincipal SessionUser user) {
 
         System.out.println("user =====" + user);
+
         model.addAttribute("user", user);
 
         return "members/userInfo";
@@ -157,7 +159,11 @@ public class UserController {
     @PostMapping("/userInfo/update")
     public String updateUserInformation(@Validated @ModelAttribute("userForm") UserForm userForm, BindingResult result) {
 
-        Member member = userService.findByEmail(userForm.getEmail()).orElse(null);
+        Member member = userService.findByEmail(userForm.getEmail()).orElse(null); // 존재하지 않으면 null 반환
+
+        //member = userService.findByEmail("didrl@naver.com").orElse(null); // null
+
+        System.out.println("member =====" + member.toString()); // 잘 된다.
 
         userService.updateUserInformation(member, userForm.getName(), userForm.getAuth_email(), userForm.getPassword());
 

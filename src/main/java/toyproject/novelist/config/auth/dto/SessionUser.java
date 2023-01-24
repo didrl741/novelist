@@ -11,16 +11,16 @@ import java.util.*;
 @ToString
 public class SessionUser implements UserDetails, Serializable {
 
-    private String name;
+    private String userName;
     private String email;
     private String password;
     private String auth_email;
 
     private Set<GrantedAuthority> authorities;
 
-    public SessionUser(String name, String email, String password, String auth_email, Collection<? extends GrantedAuthority> authorities) {
+    public SessionUser(String userName, String email, String password, String auth_email, Collection<? extends GrantedAuthority> authorities) {
 
-        this.name = name;
+        this.userName = userName;
         this.email = email;
         this.password = password;
         this.auth_email = auth_email;
@@ -35,7 +35,7 @@ public class SessionUser implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return name;
+        return userName;
     }
 
     @Override
