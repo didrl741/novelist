@@ -47,6 +47,17 @@ public class PostController {
         return "post/createPostForm";
     }
 
+    @GetMapping("/nonMember/write")
+    public String createPostFormByNonMember(Model model) {
+
+        TodayWords todayWords = todayWordsService.findTodayWords();
+        String[] wordFive = todayWords.makeArr();
+
+        model.addAttribute("postForm", new PostForm());
+        model.addAttribute("wordFive", wordFive);
+        return "post/createPostFormByNonMember";
+    }
+
     // 글 제출
     @PostMapping("/write")
     public String create(@Valid PostForm postForm, BindingResult result, @AuthenticationPrincipal SessionUser user) throws Exception {
@@ -61,6 +72,24 @@ public class PostController {
         String [] words = todayWords.makeArr();
 
         Post post = new Post(postForm.getContent(), LocalDateTime.now(), logInedMember, todayWords);
+
+        postService.join(post);
+
+        return "redirect:/";
+    }
+
+    // 글 제출
+    @PostMapping("/nonMember/write")
+    public String createByNonMember(@Valid PostForm postForm, BindingResult result) throws Exception {
+
+        if (result.hasErrors()) {
+            return "post/createPostForm";
+        }
+
+        TodayWords todayWords = todayWordsService.findTodayWords();
+        String [] words = todayWords.makeArr();
+
+        Post post = new Post(postForm.getContent(), LocalDateTime.now(), todayWords);
 
         postService.join(post);
 

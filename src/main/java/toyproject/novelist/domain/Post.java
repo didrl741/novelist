@@ -4,6 +4,7 @@ package toyproject.novelist.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 import toyproject.novelist.domain.user.Member;
 import toyproject.novelist.domain.word.TodayWords;
 import toyproject.novelist.domain.word.TodayWordsEmbedded;
@@ -36,6 +37,7 @@ public class Post {
 
     private int loveCount;
 
+
     @Transient
     private boolean isLovedByLogInedUser;
 
@@ -61,6 +63,16 @@ public class Post {
         this.content = content;
         this.postDate = postDate;
         this.member = member;
+        this.loveCount = 0;
+
+        this.todayWordsEmbedded = new TodayWordsEmbedded(todayWords);
+
+    }
+
+    @Builder
+    public Post(String content, LocalDateTime postDate, TodayWords todayWords) {
+        this.content = content;
+        this.postDate = postDate;
         this.loveCount = 0;
 
         this.todayWordsEmbedded = new TodayWordsEmbedded(todayWords);

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/myheader :: header" />
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+
+<!--<div th:if="${session.loginedUserName==null}">-->
+<!--    <script>-->
+<!--        top.alert("로그인이 필요합니다!");-->
+<!--        location.href  ="/"-->
+<!--    </script>-->
+<!--</div>-->
+
+<div class="container">
+    <div th:replace="fragments/mybodyheader :: bodyHeader"/>
+
+    <p>오늘의 단어</p>
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+            </thead>
+            <tbody>
+            <tr th:each="word : ${wordFive}">
+
+                <td th:text="${word}" ></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form th:action="@{/nonMember/write}" th:object="${postForm}" method="post" enctype="multipart/form-data" >
+
+        <div class="form-group">
+            <label th:for="text">입력칸</label>
+
+            <textarea name="textarea" style="width:500px;height:250px;"
+                      th:field="*{content}" class="form-control"
+                      th:class="${#fields.hasErrors('content')}? 'form-control fieldError' : 'form-control'"
+                      placeholder="내용을 입력하세요"></textarea>
+            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Incorrect date</p>
+        </div>
+        <button type="submit" class="btn btn-primary">등록</button>
+    </form>
+    <br/>
+</div> <!-- /container -->
+
+
+</body>
+
+</html>
