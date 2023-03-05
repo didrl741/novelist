@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<div class="header" th:fragment="bodyHeader">
-  <ul class="nav nav-pills pull-right">
-    <li><a href="/">Home</a></li>
-  </ul>
-  <a href="/"><h3 class="text-muted">초단편 소설가</h3></a>
+<div class="d-flex flex-wrap justify-content-center py-3 mb-4 mx-5 border-bottom" th:fragment="bodyHeader">
+
+  <a href="/"><h3 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">초단편 소설가</h3></a>
 
   <div sec:authorize="isAnonymous()">
     <a href="/login">로그인</a>
@@ -19,3 +17,14 @@
 
 
 </div>
+
+<!--<header th:fragment="body_header" class="d-flex flex-wrap justify-content-center py-3 mb-4 mx-5 border-bottom">-->
+<!--  <a href="#" th:href="@{/}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">-->
+<!--    <span class="home fs-4">6단어 소설가</span>-->
+<!--  </a>-->
+
+<!--  <ul class="nav nav-pills">-->
+<!--    <li class="nav-item"><a href="#" th:href="@{/member/new}" class="nav-link">회원가입</a></li>-->
+<!--    <li class="nav-item"><a href="#" th:href="@{/member/login}" class="nav-link">로그인</a></li>-->
+<!--  </ul>-->
+<!--</header>-->

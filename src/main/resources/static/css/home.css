@@ -1,0 +1,63 @@
+.bg-light{
+    background-image: url(../img/book.jpg);
+
+    background-repeat: no-repeat;
+    background-position: 50% 45%;
+    background-position-x: 100%;
+    background-color: white!important;
+    background-size: 55%;
+}
+
+.content {
+    line-height: 45px!important;
+}
+
+.bg-yellow {
+    --bs-bg-opacity: 1;
+    background-color: papayawhip!important;
+}
+
+.bg-blue {
+    --bs-bg-opacity: 1;
+    background-color: powderblue!important;
+}
+
+.card {
+
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 1.5rem;
+}
+
+h2 {
+    display: block;
+    color: black!important;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+.h2-content {
+    display: block;
+    color: black!important;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    /*font-family: 'Black And White Picture', sans-serif!important;*/
+    font-family: 'Cute Font', cursive;
+    font-size: 25px;
+}
+
+small{
+    color: black;
+}
+
+.badge.even-larger-badge {
+    font-size: 1.5em;
+}
+

@@ -25,3 +25,4 @@
 1663914653014|0|statement|connection 490|url jdbc:h2:tcp://localhost/~/novelist|insert into word_collection (wrods_id, word) values (?, ?)|insert into word_collection (wrods_id, word) values (1, '금강산')
 1663914653015|0|statement|connection 490|url jdbc:h2:tcp://localhost/~/novelist|insert into word_collection (wrods_id, word) values (?, ?)|insert into word_collection (wrods_id, word) values (1, '금고')
 1663914653015|0|statement|connection 490|url jdbc:h2:tcp://localhost/~/novelist|insert into word_collection (wrods_id, word) values (?, ?)|insert into word_collection (wrods_id, word) values (1, '금년')
+1677773720989|42|commit|connection 17|url jdbc:h2:tcp://localhost/~/novelist||

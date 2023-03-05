@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/myheader :: header" />
+<head th:replace="fragments/header :: header" />
 <style>
     .fieldError {
         border-color: #bd2130;
@@ -9,7 +9,7 @@
 <body>
 <div class="container">
 
-    <div th:replace="fragments/mybodyheader :: bodyHeader"/>
+    <div th:replace="fragments/bodyheader :: bodyHeader"/>
 
     <div>
         <form role="form" th:action th:object="${userForm}" method="post">

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 mx-5 border-bottom" th:fragment="bodyHeader">
+
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <i class="fa-duotone fa-book-sparkles"></i>
+        <span class="home fs-4">초단편 소설가</span>
+    </a>
+
+    <div sec:authorize="isAnonymous()">
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="/login" class="nav-link">로그인</a></li>
+            <li class="nav-item"><a href="/join" class="nav-link">회원가입</a></li>
+        </ul>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="/logout" class="nav-link">로그아웃</a></li>
+            <li class="nav-item"><a href="/userInfo" class="nav-link">회원정보</a></li>
+        </ul>
+    </div>
+
+</header>

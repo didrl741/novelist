@@ -76,6 +76,5 @@ public class Post {
         this.loveCount = 0;
 
         this.todayWordsEmbedded = new TodayWordsEmbedded(todayWords);
-
     }
 }

@@ -2,41 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<!--<head>-->
-<!--    <title>Board</title>-->
-<!--    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />-->
-<!--</head>-->
-
-<head th:replace="fragments/myheader :: header">
-    <title>Hello</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
+<head th:replace="fragments/header :: header">
 
 </head>
 
 <body>
 
 <div class="container">
-    <div th:replace="fragments/mybodyheader :: bodyHeader" />
+    <div th:replace="fragments/bodyheader :: bodyHeader" />
     <div class="jumbotron">
 
-        <p>오늘의 단어</p>
-        <div>
-            <table class="table table-striped">
-                <thead>
-                </thead>
-                <tbody>
-                <tr th:each="word : ${wordFive}">
+        <div class="p-5 bg-light rounded-3">
+            <div class="container-fluid py-5 px-5">
+                <h1 class="display-5 fw-bold">무엇을 쓰든 상관 없다.</h1>
+                <h1 class="display-5 fw-bold">단, 5개의 단어를 포함해서!</h1>
+                <p class="col-md-8 fs-5">아래의 단어들을 포함해서 소설을 써보세요.<br>메일 주어지는 단어들이 달라집니다.</p>
+                <a class="btn btn-primary btn-lg" href="/write" type="button">회원 글 쓰기</a>
+                <a class="btn btn-primary btn-lg" href="/nonMember/write" type="button">비회원 글 쓰기</a>
+            </div>
 
-                    <td th:text="${word}" ></td>
+            <p class="col-md-8 fs-5">오늘의 단어</p>
 
-                </tr>
-                </tbody>
-            </table>
+            <p class="badge bg-success even-larger-badge" th:text="${wordFive[0]}" ></p>
+            <p class="badge bg-success even-larger-badge" th:text="${wordFive[1]}" ></p>
+            <p class="badge bg-success even-larger-badge" th:text="${wordFive[2]}" ></p>
+            <p class="badge bg-success even-larger-badge" th:text="${wordFive[3]}" ></p>
+            <p class="badge bg-success even-larger-badge" th:text="${wordFive[4]}" ></p>
         </div>
 
-        <a class="btn btn-lg btn-dark" href="/write">글쓰러 가기</a>
-        <a class="btn btn-lg btn-dark" href="/nonMember/write">비회원 글쓰러 가기</a>
     </div>
 
 </div> <!-- /container -->
@@ -58,116 +51,108 @@
 
         <!-- 좋아요 순 -->
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div>
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>작성자</th>
-                        <th>이메일</th>
-                        <th>내용</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="post : ${postListByLoveCount}">
 
-                        <td>
-                            <div th:if = "${post.member != null}" th:text="${post.member.name}"></div>
-                            <div th:if = "${post.member == null}"> 익명 </div>
-                        </td>
+            <div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-5">
+                <div class="col" th:each="post : ${postListByLoveCount}">
+                    <div class="card card-cover h-100 overflow-hidden rounded-5 bg-yellow shadow-lg">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-dark text-shadow-1">
+                            <p class="content mt-3 mb-3 fw-light h2-content" th:text="${post.content}" ></p>
+                            <ul class="d-flex list-unstyled mt-auto">
+                                <li class="me-auto">
+                                    <small th:if = "${post.member != null}" th:text="${post.member.name}"></small>
+                                    <small th:if = "${post.member == null}"> 익명 </small>
+                                </li>
+                                <div>
+                                    <li class="d-flex align-items-center mx-2">
+                                        <i sec:authorize="isAuthenticated()"
+                                           th:if="${post.isLovedByLogInedUser == true }"
+                                           class="fa-solid fa-heart "
+                                           th:id="|loveImg${post.id}|"
+                                           th:postId="${post.id}"
+                                           style="color: red;"
+                                           onclick="determineLike(this.getAttribute('postId'))"></i>
 
-                        <td>
-                            <div th:if = "${post.member != null}" th:text="${post.member.email}"></div>
-                            <div th:if = "${post.member == null}"></div>
-                        </td>
-                        <td th:text="${post.content}" ></td>
-                        <td>
-                            <i sec:authorize="isAuthenticated()"
-                               th:if="${post.isLovedByLogInedUser == true }"
-                               class="fa-solid fa-heart"
-                               th:id="|loveImg${post.id}|"
-                               th:postId="${post.id}"
-                               onclick="determineLike(this.getAttribute('postId'))"></i>
+                                        <i sec:authorize="isAuthenticated()"
+                                           th:if="${post.isLovedByLogInedUser != true}"
+                                           class="fa-regular fa-heart"
+                                           th:id="|loveImg${post.id}|"
+                                           th:postId="${post.id}"
+                                           style="color: red;"
+                                           onclick="determineLike(this.getAttribute('postId'))"></i>
 
-                            <i sec:authorize="isAuthenticated()"
-                               th:if="${post.isLovedByLogInedUser != true}"
-                               class="fa-regular fa-heart"
-                               th:id="|loveImg${post.id}|"
-                               th:postId="${post.id}"
-                               onclick="determineLike(this.getAttribute('postId'))"></i>
-
-                            <i sec:authorize="isAnonymous()"
-                               class="fa-regular fa-heart"
-                               th:id="|loveImg${post.id}|"
-                               th:postId="${post.id}"
-                               onclick="alertFunc()"></i>
+                                        <i sec:authorize="isAnonymous()"
+                                           class="fa-regular fa-heart"
+                                           th:id="|loveImg${post.id}|"
+                                           th:postId="${post.id}"
+                                           style="color: red;"
+                                           onclick="alertFunc()"></i>
 
 
-                            <span th:id="|loveCount${post.id}|" th:text="${post.loveCount}"></span>
-
-                            <!--                    th:if="${session.loginedUserName != null and post.getUser().getUserName() != session.loginedUserName }"-->
-
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                                        <span th:id="|loveCount${post.id}|" th:text="${post.loveCount}" style="color: red;"></span>
+                                    </li>
+                                    <li>
+                                        <div th:text="|${post.TodayWordsEmbedded.word1} ${post.TodayWordsEmbedded.word2} ${post.TodayWordsEmbedded.word3} ${post.TodayWordsEmbedded.word4} ${post.TodayWordsEmbedded.word5} |" ></div>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
 
         <!-- 최신 순 -->
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <div>
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>작성자</th>
-                        <th>이메일</th>
-                        <th>내용</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="post : ${postListByDate}">
 
-                        <td>
-                            <div th:if = "${post.member != null}" th:text="${post.member.name}"></div>
-                            <div th:if = "${post.member == null}"> 익명 </div>
-                        </td>
+            <div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-5">
+                <div class="col" th:each="post : ${postListByDate}">
+                    <div class="card card-cover h-100 overflow-hidden rounded-5 bg-blue shadow-lg">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-dark text-shadow-1">
+                            <p class="content mt-3 mb-3 fw-light h2-content" th:text="${post.content}" ></p>
+                            <ul class="d-flex list-unstyled mt-auto">
+                                <li class="me-auto">
+                                    <small th:if = "${post.member != null}" th:text="${post.member.name}"></small>
+                                    <small th:if = "${post.member == null}"> 익명 </small>
+                                </li>
+                                <div>
+                                    <li class="d-flex align-items-center mx-2">
+                                        <i sec:authorize="isAuthenticated()"
+                                           th:if="${post.isLovedByLogInedUser == true }"
+                                           class="fa-solid fa-heart "
+                                           th:id="|loveImg${post.id}|"
+                                           th:postId="${post.id}"
+                                           style="color: red;"
+                                           onclick="determineLike(this.getAttribute('postId'))"></i>
 
-                        <td>
-                            <div th:if = "${post.member != null}" th:text="${post.member.email}"></div>
-                            <div th:if = "${post.member == null}"></div>
-                        </td>
-                        <td th:text="${post.content}" ></td>
-                        <td>
-                            <i sec:authorize="isAuthenticated()"
-                               th:if="${post.isLovedByLogInedUser == true }"
-                               class="fa-solid fa-heart"
-                               th:id="|loveImg${post.id}|"
-                               th:postId="${post.id}"
-                               onclick="determineLike(this.getAttribute('postId'))"></i>
+                                        <i sec:authorize="isAuthenticated()"
+                                           th:if="${post.isLovedByLogInedUser != true}"
+                                           class="fa-regular fa-heart"
+                                           th:id="|loveImg${post.id}|"
+                                           th:postId="${post.id}"
+                                           style="color: red;"
+                                           onclick="determineLike(this.getAttribute('postId'))"></i>
 
-                            <i sec:authorize="isAuthenticated()"
-                               th:if="${post.isLovedByLogInedUser != true}"
-                               class="fa-regular fa-heart"
-                               th:id="|loveImg${post.id}|"
-                               th:postId="${post.id}"
-                               onclick="determineLike(this.getAttribute('postId'))"></i>
-
-                            <i sec:authorize="isAnonymous()"
-                               class="fa-regular fa-heart"
-                               th:id="|loveImg${post.id}|"
-                               th:postId="${post.id}"
-                               onclick="alertFunc()"></i>
+                                        <i sec:authorize="isAnonymous()"
+                                           class="fa-regular fa-heart"
+                                           th:id="|loveImg${post.id}|"
+                                           th:postId="${post.id}"
+                                           style="color: red;"
+                                           onclick="alertFunc()"></i>
 
 
-                            <span th:id="|loveCount${post.id}|" th:text="${post.loveCount}"></span>
-
-                            <!--                    th:if="${session.loginedUserName != null and post.getUser().getUserName() != session.loginedUserName }"-->
-
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                                        <span th:id="|loveCount${post.id}|" th:text="${post.loveCount}" style="color: red;"></span>
+                                    </li>
+                                    <li>
+                                        <div th:text="|${post.TodayWordsEmbedded.word1} ${post.TodayWordsEmbedded.word2} ${post.TodayWordsEmbedded.word3} ${post.TodayWordsEmbedded.word4} ${post.TodayWordsEmbedded.word5} |" ></div>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
 
     </div>
@@ -196,9 +181,9 @@
         </ul>
     </nav>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 
-
-
+© <a href='https://kr.123rf.com/profile_captainvector'>captainvector</a>
 </body>
 
 <script type="text/javascript">
