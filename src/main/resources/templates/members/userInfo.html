@@ -11,11 +11,11 @@
     <div th:replace="fragments/bodyheader :: bodyHeader" />
     <div class="jumbotron">
 
-        <p th:text="|email &#58; ${user.email}|"></p>
-        <p th:text="|${user.username} 님, 반가워요|"></p>
+        <p class="col-md-8 fs-5" th:text="|email &#58; ${useremail}|"></p>
+        <p class="col-md-8 fs-5" th:text="|이름 &#58; ${username}|"></p>
 
         <div>
-            <a th:href="@{/userInfo/update}">회원정보 수정</a>
+            <a class="btn btn-primary btn-lg" th:href="@{/userInfo/update}" type="button">회원정보 수정</a>
         </div>
     </div>
 

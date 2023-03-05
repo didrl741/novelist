@@ -69,7 +69,6 @@ public class PostController {
         Member logInedMember = userService.findByEmail(user.getEmail()).get();
 
         TodayWords todayWords = todayWordsService.findTodayWords();
-        String [] words = todayWords.makeArr();
 
         Post post = new Post(postForm.getContent(), LocalDateTime.now(), logInedMember, todayWords);
 
@@ -87,7 +86,6 @@ public class PostController {
         }
 
         TodayWords todayWords = todayWordsService.findTodayWords();
-        String [] words = todayWords.makeArr();
 
         Post post = new Post(postForm.getContent(), LocalDateTime.now(), todayWords);
 
@@ -105,7 +103,6 @@ public class PostController {
         Map<String, Object> returnMap = new HashMap<>();
 
         String logInedUserEmail = user.getEmail();
-
 
         if (userService.findByEmail(logInedUserEmail).isPresent()) {
             Member logInedMember = userService.findByEmail(logInedUserEmail).get();

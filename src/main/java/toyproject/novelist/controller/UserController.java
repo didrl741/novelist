@@ -48,13 +48,6 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @ResponseBody
-    @GetMapping("/test/login")
-    public String login_test(@AuthenticationPrincipal SessionUser user) {
-
-        return user.getEmail();
-    }
-
     // 회원가입 페이지로 이동
     @GetMapping("/join")
     public String createForm(Model model) {
@@ -109,7 +102,9 @@ public class UserController {
 
         System.out.println("user =====" + user);
 
-        model.addAttribute("user", user);
+        model.addAttribute("username", user.getUsername());
+        model.addAttribute("useremail", user.getEmail());
+
 
         return "members/userInfo";
     }
@@ -162,8 +157,6 @@ public class UserController {
         Member member = userService.findByEmail(userForm.getEmail()).orElse(null); // 존재하지 않으면 null 반환
 
         //member = userService.findByEmail("didrl@naver.com").orElse(null); // null
-
-        System.out.println("member =====" + member.toString()); // 잘 된다.
 
         userService.updateUserInformation(member, userForm.getName(), userForm.getAuth_email(), userForm.getPassword());
 

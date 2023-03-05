@@ -32,13 +32,7 @@ public class Scheduler {
 //        log.info("3초마다 실행!");
 //    }
 
-    @Scheduled(cron = "0 0 0 * * *")
-    public void testMethod2(){
-        log.info("매일 00시 정각");
-    }
-
-
-    // 매일 정각에 TodayWords 자동으로 수정
+    // 매일 정각에 TodayWords 자동으로 수정. 핵심 로직
     @Transactional
     @Scheduled(cron = "0 0 0 * * *")
     public void wordChange(){

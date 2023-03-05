@@ -37,7 +37,6 @@ public class Post {
 
     private int loveCount;
 
-
     @Transient
     private boolean isLovedByLogInedUser;
 

@@ -40,7 +40,6 @@ public class HomeController {
         List<Post> postListByLoveCount = postService.findByLoveCount(startIdx, pageSize);
 
         if (user != null) {
-            System.out.println("userEmail ====" + user.getEmail());
             if (userService.findByEmail(user.getEmail()).isPresent()) {
 
                 Member logInedMember = userService.findByEmail(user.getEmail()).get();
@@ -64,15 +63,12 @@ public class HomeController {
         TodayWords todayWords = todayWordsService.findTodayWords();
         String[] wordFive = todayWords.makeArr();
 
-
         model.addAttribute("pagination", pagination);
         model.addAttribute("postListByDate", postListByDate);
         model.addAttribute("postListByLoveCount", postListByLoveCount);
         model.addAttribute("wordFive", wordFive);
 
-
         return "index";
-
     }
 
 }
