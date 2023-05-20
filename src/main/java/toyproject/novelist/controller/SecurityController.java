@@ -33,7 +33,8 @@ public class SecurityController {
     @GetMapping("/show")
     public String showAll(Model model) {
 
-        File dir = new File(".\\src\\main\\resources\\static\\img");
+        //File dir = new File(".\\src\\main\\resources\\static\\img");
+        File dir = new File("./src/main/resources/static/img");
         String[] filenames = dir.list();
 
         for (int i = 0; i < filenames.length; i++) {
@@ -66,25 +67,25 @@ public class SecurityController {
         if (!file.isEmpty()) {
             try {
                 // Save the uploaded image to the server
-                String fileName = file.getOriginalFilename();
-                String fileUrl = "C:\\Users\\didrl\\OneDrive_Hongik\\바탕 화면\\img\\";
-                String fileUrl2 = ".\\src\\main\\resources\\static\\img";
-                System.out.println("fileName =====" + fileName);
+                String filename = file.getOriginalFilename();
+                //String fileUrl2 = ".\\src\\main\\resources\\static\\img";
+                String fileUrl2 = "./src/main/resources/static/img";
+                System.out.println("filename =====" + filename);
 
-                File uploadedFile = new File(fileUrl2, fileName);
+                File uploadedFile = new File(fileUrl2, filename);
                 System.out.println("uploadedFile =====" + uploadedFile);
                 FileCopyUtils.copy(file.getBytes(), uploadedFile);
 
                 // Create a ModelAndView to show the uploaded image
                 ModelAndView modelAndView = new ModelAndView("show-image");
-                modelAndView.addObject("imageName", fileName);
+                modelAndView.addObject("imageName", filename);
 
 
 
 //                return modelAndView;
                 List<String> filess = new ArrayList<>();
-                filess.add(fileName);
-                System.out.println("fileName =====" + fileName);
+                filess.add(filename);
+                System.out.println("filename =====" + filename);
                 model.addAttribute("filess", filess);
                 return "show-image";
             } catch (IOException e) {
