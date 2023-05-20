@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Uploaded Image</title>
+</head>
+<body>
+<h2>Uploaded Image:</h2>
+<!--<img th:src="@{/img/display(imageName=${imageName})}" alt="Uploaded Image" />-->
+<!--<img th:src="${'/img/'+ ${filename}}" style="width:300px;height:auto;">-->
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>이미지</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="file : ${files}">
+        <td>
+            <img th:src="${'/img/'+ file}" style="width:300px;height:auto;">
+            <!--                    <img th:src=" '/img/' + ${file.filename}" style="width:300px;height:auto;">-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
